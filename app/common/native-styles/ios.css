@@ -31,7 +31,7 @@ tab-bar tab-bar-item {
 }
 
 tab-bar tab-bar-item:selected {
-  color: #1596f7;
+  color: red;
 }
 
 tab-bar-item#settings {
