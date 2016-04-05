@@ -1,36 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <script>
-  window.addEventListener('WebComponentsReady', function() {
-    supersonic.app.splashscreen.hide();
-  });
-  </script>
-  <!-- Cloud resource definition file for Supersonic Data -->
-  <script src="/cloud-resources.js"></script>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-  <title>learn-more</title>
-
-  <link rel="stylesheet" href="/components/supersonic/css/supersonic.css" />
-  <link rel="stylesheet" href="/app/common/stylesheets/application.css" />
-  <link rel="import" href="/components/supersonic/components/import.html">
-
-  <script src="http://localhost/cordova.js"></script>
-  <script src="/components/steroids-js/steroids.js"></script>
-  <script src="/components/angular/angular.js"></script>
-  <script src="/components/supersonic/supersonic.js"></script>
-  <script src="/components/webcomponentsjs/webcomponents.js"></script>
-
-  
-  <script src="/app/common.js"></script>
-  
-  <script src="/app/example.js"></script>
-  
-</head>
-<body ng-app="example">
-
 <div class="padding" ng-controller="LearnMoreController">
   <super-navbar>
     <super-navbar-title ng-bind="navbarTitle"></super-navbar-title>
@@ -62,7 +29,3 @@
   <h3>Forums</h3>
   <p>Stuck on something? Built something great that you want to share? Hop on to the AppGyver forums at <a onclick="supersonic.app.openURL('https://forums.appgyver.com')" href="#">https://forums.appgyver.com</a> and join the community!</p>
 </div>
-
-
-</body>
-</html>
