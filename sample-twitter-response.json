@@ -1,0 +1,605 @@
+{
+  "result": {
+    "places": [
+      {
+        "id": "8b351eeb91372dc7",
+        "url": "https://api.twitter.com/1.1/geo/id/8b351eeb91372dc7.json",
+        "place_type": "city",
+        "name": "Evanston",
+        "full_name": "Evanston, IL",
+        "country_code": "US",
+        "country": "United States",
+        "contained_within": [
+          {
+            "id": "a922fabd203ea9f4",
+            "url": "https://api.twitter.com/1.1/geo/id/a922fabd203ea9f4.json",
+            "place_type": "admin",
+            "name": "Chicago IL",
+            "full_name": "Chicago IL",
+            "country_code": "US",
+            "country": "United States",
+            "centroid": [
+              -87.92469040230425,
+              41.490781
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -89.166051,
+                    40.485601
+                  ],
+                  [
+                    -89.166051,
+                    42.495961
+                  ],
+                  [
+                    -86.674005,
+                    42.495961
+                  ],
+                  [
+                    -86.674005,
+                    40.485601
+                  ],
+                  [
+                    -89.166051,
+                    40.485601
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          -87.69099056864921,
+          42.04543685
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -87.733451,
+                42.0191507
+              ],
+              [
+                -87.733451,
+                42.071723
+              ],
+              [
+                -87.6649403,
+                42.071723
+              ],
+              [
+                -87.6649403,
+                42.0191507
+              ],
+              [
+                -87.733451,
+                42.0191507
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "4c81e0e3e1e5cbd7",
+        "url": "https://api.twitter.com/1.1/geo/id/4c81e0e3e1e5cbd7.json",
+        "place_type": "city",
+        "name": "Evanston",
+        "full_name": "Evanston, WY",
+        "country_code": "US",
+        "country": "United States",
+        "contained_within": [
+          {
+            "id": "db67e8353f39779a",
+            "url": "https://api.twitter.com/1.1/geo/id/db67e8353f39779a.json",
+            "place_type": "admin",
+            "name": "Salt Lake City UT",
+            "full_name": "Salt Lake City UT",
+            "country_code": "US",
+            "country": "United States",
+            "centroid": [
+              -112.64547698351362,
+              39.7893785
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -116.600983,
+                    36.997997
+                  ],
+                  [
+                    -116.600983,
+                    42.58076
+                  ],
+                  [
+                    -108.295652,
+                    42.58076
+                  ],
+                  [
+                    -108.295652,
+                    36.997997
+                  ],
+                  [
+                    -116.600983,
+                    36.997997
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          -110.96144521264524,
+          41.254149999999996
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -111.004347,
+                41.222364
+              ],
+              [
+                -111.004347,
+                41.285936
+              ],
+              [
+                -110.9286222,
+                41.285936
+              ],
+              [
+                -110.9286222,
+                41.222364
+              ],
+              [
+                -111.004347,
+                41.222364
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "7b997df3d9740fb3",
+        "url": "https://api.twitter.com/1.1/geo/id/7b997df3d9740fb3.json",
+        "place_type": "neighborhood",
+        "name": "Evanston South",
+        "full_name": "Evanston South, Gawler",
+        "country_code": "AU",
+        "country": "Australia",
+        "contained_within": [
+          {
+            "id": "00746e8d6ddec3b2",
+            "url": "https://api.twitter.com/1.1/geo/id/00746e8d6ddec3b2.json",
+            "place_type": "city",
+            "name": "Gawler",
+            "full_name": "Gawler, South Australia",
+            "country_code": "AU",
+            "country": "Australia",
+            "centroid": [
+              138.73247123720319,
+              -34.59739191925
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          138.72472150737278,
+          -34.64852553
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.70996092,
+                -34.66624302
+              ],
+              [
+                138.70996092,
+                -34.63080804
+              ],
+              [
+                138.74226192,
+                -34.63080804
+              ],
+              [
+                138.74226192,
+                -34.66624302
+              ],
+              [
+                138.70996092,
+                -34.66624302
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "00fc2c4213c4dbd1",
+        "url": "https://api.twitter.com/1.1/geo/id/00fc2c4213c4dbd1.json",
+        "place_type": "neighborhood",
+        "name": "Evanston",
+        "full_name": "Evanston, Calgary",
+        "country_code": "CA",
+        "country": "Canada",
+        "contained_within": [
+          {
+            "id": "53504716d445dcad",
+            "url": "https://api.twitter.com/1.1/geo/id/53504716d445dcad.json",
+            "place_type": "city",
+            "name": "Calgary",
+            "full_name": "Calgary, Alberta",
+            "country_code": "CA",
+            "country": "Canada",
+            "centroid": [
+              -114.04977719891315,
+              51.027664
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -114.3160379,
+                    50.84278
+                  ],
+                  [
+                    -114.3160379,
+                    51.212548
+                  ],
+                  [
+                    -113.859664,
+                    51.212548
+                  ],
+                  [
+                    -113.859664,
+                    50.84278
+                  ],
+                  [
+                    -114.3160379,
+                    50.84278
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          -114.11857308014083,
+          51.16682265
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -114.132211,
+                51.1575872
+              ],
+              [
+                -114.132211,
+                51.1764213
+              ],
+              [
+                -114.0941275,
+                51.1764213
+              ],
+              [
+                -114.0941275,
+                51.1575872
+              ],
+              [
+                -114.132211,
+                51.1575872
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "04cbe50fe075d7d0",
+        "url": "https://api.twitter.com/1.1/geo/id/04cbe50fe075d7d0.json",
+        "place_type": "neighborhood",
+        "name": "Evanston",
+        "full_name": "Evanston, Gawler",
+        "country_code": "AU",
+        "country": "Australia",
+        "contained_within": [
+          {
+            "id": "00746e8d6ddec3b2",
+            "url": "https://api.twitter.com/1.1/geo/id/00746e8d6ddec3b2.json",
+            "place_type": "city",
+            "name": "Gawler",
+            "full_name": "Gawler, South Australia",
+            "country_code": "AU",
+            "country": "Australia",
+            "centroid": [
+              138.73247123720319,
+              -34.59739191925
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          138.73468069871487,
+          -34.620628005
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.72395196,
+                -34.63373601
+              ],
+              [
+                138.72395196,
+                -34.60752
+              ],
+              [
+                138.74340312,
+                -34.60752
+              ],
+              [
+                138.74340312,
+                -34.63373601
+              ],
+              [
+                138.72395196,
+                -34.63373601
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "17fe05a232a246f8",
+        "url": "https://api.twitter.com/1.1/geo/id/17fe05a232a246f8.json",
+        "place_type": "neighborhood",
+        "name": "Evanston Gardens",
+        "full_name": "Evanston Gardens, Gawler",
+        "country_code": "AU",
+        "country": "Australia",
+        "contained_within": [
+          {
+            "id": "00746e8d6ddec3b2",
+            "url": "https://api.twitter.com/1.1/geo/id/00746e8d6ddec3b2.json",
+            "place_type": "city",
+            "name": "Gawler",
+            "full_name": "Gawler, South Australia",
+            "country_code": "AU",
+            "country": "Australia",
+            "centroid": [
+              138.73247123720319,
+              -34.59739191925
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          138.71752919550275,
+          -34.628760494999995
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.70388412,
+                -34.63947801
+              ],
+              [
+                138.70388412,
+                -34.61804298
+              ],
+              [
+                138.73111992,
+                -34.61804298
+              ],
+              [
+                138.73111992,
+                -34.63947801
+              ],
+              [
+                138.70388412,
+                -34.63947801
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      },
+      {
+        "id": "48e2ecd7ac7223e4",
+        "url": "https://api.twitter.com/1.1/geo/id/48e2ecd7ac7223e4.json",
+        "place_type": "neighborhood",
+        "name": "Evanston Park",
+        "full_name": "Evanston Park, Gawler",
+        "country_code": "AU",
+        "country": "Australia",
+        "contained_within": [
+          {
+            "id": "00746e8d6ddec3b2",
+            "url": "https://api.twitter.com/1.1/geo/id/00746e8d6ddec3b2.json",
+            "place_type": "city",
+            "name": "Gawler",
+            "full_name": "Gawler, South Australia",
+            "country_code": "AU",
+            "country": "Australia",
+            "centroid": [
+              138.73247123720319,
+              -34.59739191925
+            ],
+            "bounding_box": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.555938997
+                  ],
+                  [
+                    138.801668992,
+                    -34.6388448415
+                  ],
+                  [
+                    138.682444,
+                    -34.6388448415
+                  ]
+                ]
+              ]
+            },
+            "attributes": {}
+          }
+        ],
+        "centroid": [
+          138.7482482061929,
+          -34.62966999
+        ],
+        "bounding_box": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                138.73178412,
+                -34.642845
+              ],
+              [
+                138.73178412,
+                -34.61649498
+              ],
+              [
+                138.76404516,
+                -34.61649498
+              ],
+              [
+                138.76404516,
+                -34.642845
+              ],
+              [
+                138.73178412,
+                -34.642845
+              ]
+            ]
+          ]
+        },
+        "attributes": {}
+      }
+    ]
+  },
+  "query": {
+    "url": "https://api.twitter.com/1.1/geo/search.json?query=Evanston",
+    "type": "search",
+    "params": {
+      "accuracy": 0,
+      "granularity": "neighborhood",
+      "query": "Evanston",
+      "autocomplete": false,
+      "trim_place": false
+    }
+  }
+}
