@@ -17,5 +17,5 @@ GeoVibesApp.config(['$routeProvider',
 }]);
 
 GeoVibesApp.controller('HomeController', function($scope){
-
+	//test
 });
