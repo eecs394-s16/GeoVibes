@@ -7,15 +7,15 @@ var GeoVibesApp = angular.module('common', [
 GeoVibesApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/map', {
+      when('/home', {
         templateUrl: 'views/layout.html',
-        controller: 'MapController'
+        controller: 'HomeController'
       }).
       otherwise({
-        redirectTo: '/map'
+        redirectTo: '/home'
       });
 }]);
 
-GeoVibesApp.controller('MapController', function($scope){
+GeoVibesApp.controller('HomeController', function($scope){
 
 });
