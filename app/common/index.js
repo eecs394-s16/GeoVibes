@@ -3,19 +3,19 @@ var GeoVibesApp = angular.module('common', [
   'supersonic'
 ]);
 
-// //Define Routing for app
-// GeoVibesApp.config(['$routeProvider',
-//   function($routeProvider) {
-//     $routeProvider.
-//       when('/map', {
-//         templateUrl: 'views/map.html',
-//         controller: 'MapController'
-//       }).
-//       otherwise({
-//         redirectTo: '/map'
-//       });
-// }]);
+//Define Routing for app
+GeoVibesApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/map', {
+        templateUrl: 'views/layout.html',
+        controller: 'MapController'
+      }).
+      otherwise({
+        redirectTo: '/map'
+      });
+}]);
 
-// GeoVibesApp.controller('MapController', function($scope){
+GeoVibesApp.controller('MapController', function($scope){
 
-// });
+});
