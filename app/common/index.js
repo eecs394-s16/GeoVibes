@@ -8,7 +8,7 @@ GeoVibesApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/map', {
-        templateUrl: 'views/map.html',
+        templateUrl: 'views/layout.html',
         controller: 'MapController'
       }).
       otherwise({
