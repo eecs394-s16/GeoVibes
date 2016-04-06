@@ -13,13 +13,13 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
          var xobj = new XMLHttpRequest();
          
          xobj.open("GET", 'http://tenaciousj.github.io/sampleTwitterEndpoint/sample-twitter-response.json', true);
-         $scope.json_test = "";
+         // $scope.json_test = "";
          xobj.onreadystatechange = function() {
           // document.getElementById("aaa").innerHTML = "12321232323232";
           if (xobj.readyState == 4 && xobj.status == "200"){
             var json = JSON.parse(xobj.responseText);
-            document.getElementById("aaa").innerHTML = json+"";
-            $scope.json_test = json+"";
+            document.getElementById("aaa").innerHTML = json["result"]["places"][0]["full_name"]+"";
+            // $scope.json_test = json+"";
             // $scope.$apply();
           }
           else{
@@ -29,7 +29,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           }
          }
          xobj.send();
-         $scope.$apply();
+         // $scope.$apply();
          // document.getElementById("aaa").innerHTML = "end";
        }
 

@@ -1,0 +1,113 @@
+#%RAML 0.8
+title: Steroids Data
+mediaType: application/json
+baseUri: https://rest-api.appgyver.com/v1
+
+traits:
+    - securedBySteroidsApiKey:
+        headers:
+          steroidsApiKey:
+            type: string
+            example: exampleapikey
+            default: 6fe51739e855f550aad73e80d32ed4a8ca13a1c7c51bc2c35162c6fe2dba55e1
+          steroidsAppId:
+            type: integer
+            example: 1234
+            default: 113774
+  
+schemas:
+  - Tweet_collection: '{"$schema":"http://json-schema.org/schema","title":"Tweet collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"latitude":{"type":"string"},"longitude":{"type":"string"},"sentiment":{"type":"string"},"time":{"type":"string"},"city":{"type":"string"},"state":{"type":"string"}},"required":[]}}}}'
+  - Tweet_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"object":{"type":"object","properties":{"latitude":{"type":"string"},"longitude":{"type":"string"},"sentiment":{"type":"string"},"time":{"type":"string"},"city":{"type":"string"},"state":{"type":"string"}},"required":[]}}}'
+
+resourceTypes:
+  - dolan_db_collection:
+      usage: This resourceType should be used for any collection of items
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "collection"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "objects"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_collection # e.g cars
+      post:
+        description: |
+          {
+            "action": "create",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+
+  - dolan_db_member:
+      usage: This resourceType should be used for any built.io item
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "find"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+      put:
+        description: |
+          {
+            "action": "update",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member
+      delete:
+        description: |
+          {
+            "action": "destroy"
+          }
+        responses:
+          200:
+
+
+/Tweet:
+  description: |
+    {
+      "resourceName": "Tweet",
+      "identifierKey": "id"
+    }
+  type: dolan_db_collection
+  /{id}:
+    type: dolan_db_member
+
+
