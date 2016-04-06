@@ -41,22 +41,22 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       document.getElementById("aaa").innerHTML = "end";
       // var query = {"city": "Evanston"};
       console.log("here!");
-      // Tweet.findAll().then(function(tweets){
+      Tweet.findAll().then(function(tweets){
 
 
         // //neighborhoods of chicago
-        var chicago=new google.maps.LatLng(41.9436,-87.6584);
-     var lakeview=new google.maps.LatLng(41.9436,-87.6584);
-     var uptown=new google.maps.LatLng(41.9665,-87.6533);
-     var evanston=new google.maps.LatLng(42.0451,-87.6877);
-     var wickerpark=new google.maps.LatLng(41.9088,-87.6796);
-     var streeterville=new google.maps.LatLng(41.8927,-87.6200);
-        // var streeterville =new google.maps.LatLng(tweets[0]["latitude"],tweets[0]["longitude"]);
-        // var lakeview=new google.maps.LatLng(tweets[1]["latitude"],tweets[1]["longitude"]);
-        // var uptown=new google.maps.LatLng(tweets[2]["latitude"],tweets[2]["longitude"]);
-        // var evanston=new google.maps.LatLng(tweets[3]["latitude"],tweets[3]["longitude"]);
-        // var wickerpark=new google.maps.LatLng(tweets[4]["latitude"],tweets[4]["longitude"]);
-
+        // var chicago=new google.maps.LatLng(41.9436,-87.6584);
+        // var lakeview=new google.maps.LatLng(41.9436,-87.6584);
+        // var uptown=new google.maps.LatLng(41.9665,-87.6533);
+        // var evanston=new google.maps.LatLng(42.0451,-87.6877);
+        // var wickerpark=new google.maps.LatLng(41.9088,-87.6796);
+        // var streeterville=new google.maps.LatLng(41.8927,-87.6200);
+        var streeterville =new google.maps.LatLng(tweets[0]["latitude"],tweets[0]["longitude"]);
+        var lakeview=new google.maps.LatLng(tweets[1]["latitude"],tweets[1]["longitude"]);
+        var uptown=new google.maps.LatLng(tweets[2]["latitude"],tweets[2]["longitude"]);
+        var evanston=new google.maps.LatLng(tweets[3]["latitude"],tweets[3]["longitude"]);
+        var wickerpark=new google.maps.LatLng(tweets[4]["latitude"],tweets[4]["longitude"]);
+         var chicago=new google.maps.LatLng(tweets[4]["latitude"],tweets[4]["longitude"]);
         var mapProp = {
           center:chicago,
           zoom:10,
@@ -77,7 +77,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
         var lakeviewcirc = new google.maps.Circle({
         center:lakeview,
-        radius:3000,
+        radius:300,
         strokeColor:"yellow",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -86,7 +86,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
           var uptowncirc = new google.maps.Circle({
         center:uptown,
-        radius:3000,
+        radius:300,
         strokeColor:"orange",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -95,7 +95,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
            var evanstoncirc = new google.maps.Circle({
         center:evanston,
-        radius:3000,
+        radius:300,
         strokeColor:"purple",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -104,7 +104,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
            var wickerparkcirc = new google.maps.Circle({
         center:wickerpark,
-        radius:3000,
+        radius:300,
         strokeColor:"turquoise",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -113,7 +113,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
           var streetervillecirc = new google.maps.Circle({
         center:streeterville,
-        radius:3000,
+        radius:300,
         strokeColor:"red",
         strokeOpacity:0.8,
         strokeWeight:2,
@@ -150,10 +150,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           infowindow.setPosition(ev.latLng);
           infowindow.open(map);
       });
-      }
+    });
+  }
           
       google.maps.event.addDomListener(window, 'load', initializeMap);
-    // })
+   
+  
 
   });
 

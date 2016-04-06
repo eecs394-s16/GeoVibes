@@ -27,6 +27,12 @@
       "id": "internet",
       "title": "Internet",
       "target_url": "http://google.com"
+    },
+    {
+      "position": 3,
+      "id": "internet",
+      "title": "Tweet",
+      "target_url": "http://localhost/app/tweet/index.html"
     }
   ],
   "configuration": {
