@@ -39,7 +39,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     };
 
-    //users Twitter API call geo search to search for a place based on user search input
+    //uses Twitter API call geo search to search for a place based on user search input
     function getTweetsGeoSearch(place){
       var xobj = new XMLHttpRequest();
       var url = "https://api.twitter.com/1.1/geo/search.json?query="+place;
@@ -60,6 +60,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     };
 
 
+    //uses Twitter API call to search for a place that the user has searched
     function getTweetsFromLocation(q, lat, longi){
       if(lat == "0" && long == "0"){
         //make database call to get most recent location

@@ -7,53 +7,121 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     $scope.geoVibesTitle = "GeoVibes";
 
-    function twitterAuth() {
-
-    };
-
 
     function getUserLocation(){
       supersonic.device.geolocation.getPosition().then( function(position) {
-          getTweets(position.coords.latitude, position.coords.longitude);
-        });
-    };
-
-    function getTweets(latitude, longitude){
-      // var Tweet = supersonic.data.model('Tweet');
-      // Tweet.findAll().then(function(tweets){
-      // };
-
-    };
-    function loadJSON() {   
-
-         var xobj = new XMLHttpRequest();
-         
-         xobj.open("GET", 'http://tenaciousj.github.io/sampleTwitterEndpoint/sample-twitter-response.json', true);
-         // $scope.json_test = "";
-         xobj.onreadystatechange = function() {
-          // document.getElementById("aaa").innerHTML = "12321232323232";
-          if (xobj.readyState == 4 && xobj.status == "200"){
-            var json = JSON.parse(xobj.responseText);
-            document.getElementById("aaa").innerHTML = json["result"]["places"][0]["full_name"]+"";
-
-            // $scope.json_test = json+"";
-            // $scope.$apply();
-          }
-          else{
-            $scope.json_test = "fail";
-            // $scope.$apply();
-            // document.getElementById("aaa").innerHTML = "12321";
-          }
-         }
-         xobj.send();
-         // $scope.$apply();
-         // document.getElementById("aaa").innerHTML = "end";
-    }
-
-    function initializeMap() {
-
-      supersonic.device.geolocation.getPosition().then( function(position) {
+          getTweetsReverseGeo(position.coords.latitude, position.coords.longitude);
       });
+    };
+
+
+    //uses Twitter API call reverse geo to center map based on user's location
+    function getTweetsReverseGeo(latitude, longitude){
+      var xobj = new XMLHttpRequest();
+      var url = "https://api.twitter.com/1.1/geo/reverse_geocode.json?lat=" +
+                latitude +
+                "&long=" +
+                longitude;
+         
+      xobj.open("GET", url, true);
+     
+      xobj.onreadystatechange = function() {
+       if (xobj.readyState == 4 && xobj.status == "200"){
+         var json = JSON.parse(xobj.responseText);
+         initializeMap(json);
+       }
+       else{
+        console.log("Error in getTweetsReverseGeo");
+        console.log("xobj.status = " + xobj.status);
+       }
+      }
+      xobj.send();
+
+    };
+
+    //uses Twitter API call geo search to search for a place based on user search input
+    function getTweetsGeoSearch(place){
+      var xobj = new XMLHttpRequest();
+      var url = "https://api.twitter.com/1.1/geo/search.json?query="+place;
+         
+      xobj.open("GET", url, true);
+     
+      xobj.onreadystatechange = function() {
+       if (xobj.readyState == 4 && xobj.status == "200"){
+         var json = JSON.parse(xobj.responseText);
+       }
+       else{
+        console.log("Error in getTweetsGeoSearch");
+        console.log("xobj.status = " + xobj.status);
+       }
+      }
+      xobj.send();
+
+    };
+
+
+    //uses Twitter API call to search for a place that the user has searched
+    function getTweetsFromLocation(q, lat, longi){
+      if(lat == "0" && long == "0"){
+        //make database call to get most recent location
+        //lat = 
+        //long =
+      }
+
+      var xobj = new XMLHttpRequest();
+      var url = "https://api.twitter.com/1.1/search/tweets.json?q=" +
+                encodeURI(q) +
+                "&lat="+
+                lat +
+                "&long="+
+                longi;
+         
+      xobj.open("GET", url, true);
+     
+      xobj.onreadystatechange = function() {
+       if (xobj.readyState == 4 && xobj.status == "200"){
+         var json = JSON.parse(xobj.responseText);
+       }
+       else{
+        console.log("Error in getTweetsFromLocation");
+        console.log("xobj.status = " + xobj.status);
+       }
+      }
+      xobj.send();
+    };
+
+
+
+
+    // function loadJSON() {   
+
+    //      var xobj = new XMLHttpRequest();
+         
+    //      xobj.open("GET", 'http://tenaciousj.github.io/sampleTwitterEndpoint/sample-twitter-response.json', true);
+    //      // $scope.json_test = "";
+    //      xobj.onreadystatechange = function() {
+    //       // document.getElementById("aaa").innerHTML = "12321232323232";
+    //       if (xobj.readyState == 4 && xobj.status == "200"){
+    //         var json = JSON.parse(xobj.responseText);
+    //         document.getElementById("aaa").innerHTML = json["result"]["places"][0]["full_name"]+"";
+
+    //         // $scope.json_test = json+"";
+    //         // $scope.$apply();
+    //       }
+    //       else{
+    //         $scope.json_test = "fail";
+    //         // $scope.$apply();
+    //         // document.getElementById("aaa").innerHTML = "12321";
+    //       }
+    //      }
+    //      xobj.send();
+    //      // $scope.$apply();
+    //      // document.getElementById("aaa").innerHTML = "end";
+    // }
+
+    function initializeMap(json) {
+
+      getUserLocation();
 
 
       // loadJSON();
