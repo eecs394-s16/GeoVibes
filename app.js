@@ -12,7 +12,7 @@ var express = require('express'),
         tweets = data;
     };
 
-    var Twitter = require('twitter-js-client').Twitter;
+    var Twitter = require('twitter-node-client').Twitter;
 
     //Get this data from your twitter apps dashboard
     var config = {
