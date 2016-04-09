@@ -7,8 +7,24 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     $scope.geoVibesTitle = "GeoVibes";
 
+    function twitterAuth() {
 
-     function loadJSON() {   
+    };
+
+
+    function getUserLocation(){
+      supersonic.device.geolocation.getPosition().then( function(position) {
+          getTweets(position.coords.latitude, position.coords.longitude);
+        });
+    };
+
+    function getTweets(latitude, longitude){
+      // var Tweet = supersonic.data.model('Tweet');
+      // Tweet.findAll().then(function(tweets){
+      // };
+
+    };
+    function loadJSON() {   
 
          var xobj = new XMLHttpRequest();
          
@@ -32,10 +48,14 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
          xobj.send();
          // $scope.$apply();
          // document.getElementById("aaa").innerHTML = "end";
-       }
-
+    }
 
     function initializeMap() {
+
+      supersonic.device.geolocation.getPosition().then( function(position) {
+      });
+
+
       // loadJSON();
       var Tweet = supersonic.data.model('Tweet');
       document.getElementById("aaa").innerHTML = "end";
