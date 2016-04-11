@@ -5,63 +5,22 @@ var GeoVibesApp = angular.module('example', [
 
 GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
+    google.maps.event.addDomListener(window, 'load', getUserLocation);
+
     $scope.geoVibesTitle = "GeoVibes";
 
 
     function getUserLocation(){
       supersonic.device.geolocation.getPosition().then( function(position) {
-          getTweetsReverseGeo(position.coords.latitude, position.coords.longitude);
+        var result = {"latitude": position.coords.latitude, "longitude": position.coords.longitude};
+        var query = "";
+        getTweetsFromLocation(query, position.coords.latitude, position.coords.longitude, result);
+        initializeMap(position.coords.latitude, position.coords.longitude);
       });
     };
 
-
-    //uses Twitter API call reverse geo to center map based on user's location
-    function getTweetsReverseGeo(latitude, longitude){
-      var xobj = new XMLHttpRequest();
-      var url = "https://api.twitter.com/1.1/geo/reverse_geocode.json?lat=" +
-                latitude +
-                "&long=" +
-                longitude;
-         
-      xobj.open("GET", url, true);
-     
-      xobj.onreadystatechange = function() {
-       if (xobj.readyState == 4 && xobj.status == "200"){
-         var json = JSON.parse(xobj.responseText);
-         initializeMap(json);
-       }
-       else{
-        console.log("Error in getTweetsReverseGeo");
-        console.log("xobj.status = " + xobj.status);
-       }
-      }
-      xobj.send();
-
-    };
-
-    //uses Twitter API call geo search to search for a place based on user search input
-    function getTweetsGeoSearch(place){
-      var xobj = new XMLHttpRequest();
-      var url = "https://api.twitter.com/1.1/geo/search.json?query="+place;
-         
-      xobj.open("GET", url, true);
-     
-      xobj.onreadystatechange = function() {
-       if (xobj.readyState == 4 && xobj.status == "200"){
-         var json = JSON.parse(xobj.responseText);
-       }
-       else{
-        console.log("Error in getTweetsGeoSearch");
-        console.log("xobj.status = " + xobj.status);
-       }
-      }
-      xobj.send();
-
-    };
-
-
     //uses Twitter API call to search for a place that the user has searched
-    function getTweetsFromLocation(q, lat, longi){
+    function getTweetsFromLocation(q, lat, longi, result){
       if(lat == "0" && long == "0"){
         //make database call to get most recent location
         //lat = 
@@ -81,6 +40,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       xobj.onreadystatechange = function() {
        if (xobj.readyState == 4 && xobj.status == "200"){
          var json = JSON.parse(xobj.responseText);
+         getTweetContentSentiment(json, result);       
        }
        else{
         console.log("Error in getTweetsFromLocation");
@@ -90,65 +50,80 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       xobj.send();
     };
 
+    function getTweetContentSentiment(json, result){
+      var tweets = [];
+      var statuses = json["statuses"];
+      for(var s = 0; s < statuses.length; s++){
+        var userName = statuses[s]["user"]["name"];
+        var tweetContent = statuses[s]["text"];
+        var sentiment;
+
+        //get sentiment of tweet
+        var xobj = new XMLHttpRequest();
+        var url = "http://text-processing.com/api/sentiment/";
+        xobj.onreadystatechange = function() {
+          if (xobj.readyState == 4 && xobj.status == 200) {
+            var json = JSON.parse(xobj.responseText);
+            sentiment = json["label"];
+          }
+          else{
+            sentiment = "neutral";
+          }
+        };
+        xobj.open("POST", url, true);
+        xobj.send("text=" + tweetContent);
+        tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
+      }
+      result["tweets"] = tweets;
+      moveDataToDatabase(result);
+
+    };
+
+    function moveDataToDatabase(result){
+
+      for(var r = 0; r < result["tweets"].length; r++){
+        var curr = result["tweets"][r];
+        var tweetObj = {
+          city: "N/A",
+          content: curr["tweet_content"],
+          latitude: result["latitude"],
+          longitude: result["longitude"],
+          sentiment: curr["sentiment"],
+          state: "N/A",
+          username: curr["user_name"],
+        };
+        var Tweet = supersonic.data.model('Tweet');
+        var finalTweet = new Tweet(tweetObj);
+        finalTweet.save().then(function(){
+          console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+        });
+      }
 
 
+    };
 
-    // function loadJSON() {   
+    function initializeMap(userLat, userLong) {
 
-    //      var xobj = new XMLHttpRequest();
-         
-    //      xobj.open("GET", 'http://tenaciousj.github.io/sampleTwitterEndpoint/sample-twitter-response.json', true);
-    //      // $scope.json_test = "";
-    //      xobj.onreadystatechange = function() {
-    //       // document.getElementById("aaa").innerHTML = "12321232323232";
-    //       if (xobj.readyState == 4 && xobj.status == "200"){
-    //         var json = JSON.parse(xobj.responseText);
-    //         document.getElementById("aaa").innerHTML = json["result"]["places"][0]["full_name"]+"";
+      var legend = {
+        "positive": "green",
+        "negative": "red",
+        "neutral": "gray",
+      };
 
-    //         // $scope.json_test = json+"";
-    //         // $scope.$apply();
-    //       }
-    //       else{
-    //         $scope.json_test = "fail";
-    //         // $scope.$apply();
-    //         // document.getElementById("aaa").innerHTML = "12321";
-    //       }
-    //      }
-    //      xobj.send();
-    //      // $scope.$apply();
-    //      // document.getElementById("aaa").innerHTML = "end";
-    // }
-
-    function initializeMap(json) {
-
-      getUserLocation();
-
-
-      // loadJSON();
       var Tweet = supersonic.data.model('Tweet');
-      document.getElementById("aaa").innerHTML = "end";
-      // var query = {"city": "Evanston"};
-      console.log("here!");
       Tweet.findAll().then(function(tweets){
 
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
 
-        // //neighborhoods of chicago
-        // var chicago=new google.maps.LatLng(41.9436,-87.6584);
-        // var lakeview=new google.maps.LatLng(41.9436,-87.6584);
-        // var uptown=new google.maps.LatLng(41.9665,-87.6533);
-        // var evanston=new google.maps.LatLng(42.0451,-87.6877);
-        // var wickerpark=new google.maps.LatLng(41.9088,-87.6796);
-        // var streeterville=new google.maps.LatLng(41.8927,-87.6200);
-        var streeterville =new google.maps.LatLng(tweets[0]["latitude"],tweets[0]["longitude"]);
-        var lakeview=new google.maps.LatLng(tweets[1]["latitude"],tweets[1]["longitude"]);
-        var uptown=new google.maps.LatLng(tweets[2]["latitude"],tweets[2]["longitude"]);
-        var evanston=new google.maps.LatLng(tweets[3]["latitude"],tweets[3]["longitude"]);
-        var wickerpark=new google.maps.LatLng(tweets[4]["latitude"],tweets[4]["longitude"]);
-         var chicago=new google.maps.LatLng(tweets[4]["latitude"],tweets[4]["longitude"]);
+        var userLoc = new google.maps.LatLng(userLat,userLong);
+
+        //sets center to be user location
         var mapProp = {
-          center:chicago,
+          center:userLoc,
           zoom:10,
-            panControl:true,
+          panControl:true,
           zoomControl:true,
           mapTypeControl:true,
           scaleControl:true,
@@ -157,91 +132,36 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           rotateControl:true, 
           mapTypeId:google.maps.MapTypeId.ROADMAP
         };
-          // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
 
+        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        var lakeviewcirc = new google.maps.Circle({
-        center:lakeview,
-        radius:300,
-        strokeColor:"yellow",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"yellow",
-        fillOpacity:0.4
-      });
-          var uptowncirc = new google.maps.Circle({
-        center:uptown,
-        radius:300,
-        strokeColor:"orange",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"orange",
-        fillOpacity:0.4
-      });
-           var evanstoncirc = new google.maps.Circle({
-        center:evanston,
-        radius:300,
-        strokeColor:"purple",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"purple",
-        fillOpacity:0.4
-      });
-           var wickerparkcirc = new google.maps.Circle({
-        center:wickerpark,
-        radius:300,
-        strokeColor:"turquoise",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"turquoise",
-        fillOpacity:0.4
-      });
-          var streetervillecirc = new google.maps.Circle({
-        center:streeterville,
-        radius:300,
-        strokeColor:"red",
-        strokeOpacity:0.8,
-        strokeWeight:2,
-        fillColor:"red",
-        fillOpacity:0.4
-      });
-          lakeviewcirc.setMap(map);
-          uptowncirc.setMap(map);
-          evanstoncirc.setMap(map);
-          wickerparkcirc.setMap(map);
-          streetervillecirc.setMap(map);
-          
+        for(var t = 0; t < tweets.length; t++){
+          var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
+          var location = new google.maps.Circle({
+            center:latLongPair,
+            radius:5,
+            strokeColor:legend[tweets[t]["sentiment"]],
+            strokeOpacity:0.8,
+            strokeWeight:2,
+            fillColor:legend[tweets[t]["sentiment"]],
+            fillOpacity:0.4
+          });
+
           var infowindow = new google.maps.InfoWindow({
-        content:"#timeoutchicago"
-        });
+            content:tweets[t]["content"]
+          });
 
-      google.maps.event.addListener(lakeviewcirc, 'click', function(ev){
-          infowindow.setPosition(ev.latLng);
-          infowindow.open(map);
-      });
-          google.maps.event.addListener(uptowncirc, 'click', function(ev){
-          infowindow.setPosition(ev.latLng);
-          infowindow.open(map);
-      });
-          google.maps.event.addListener(evanstoncirc, 'click', function(ev){
-          infowindow.setPosition(ev.latLng);
-          infowindow.open(map);
-      });
-          google.maps.event.addListener(wickerparkcirc, 'click', function(ev){
-          infowindow.setPosition(ev.latLng);
-          infowindow.open(map);
-      });
-           google.maps.event.addListener(streetervillecirc, 'click', function(ev){
-          infowindow.setPosition(ev.latLng);
-          infowindow.open(map);
-      });
+          google.maps.event.addListener(location, 'click', function(ev){
+              infowindow.setPosition(ev.latLng);
+              infowindow.open(map);
+          });
+
+        }
+
     });
-  }
+  };
           
-      google.maps.event.addDomListener(window, 'load', initializeMap);
+      
    
   
 
