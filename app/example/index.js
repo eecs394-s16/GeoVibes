@@ -160,9 +160,11 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
-
-
+		
+		var LgdIcon = document.getElementById('LegendIcon');
+		
         var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+		map.controls[google.maps.ControlPosition.RIGHT_TOP].push(LgdIcon);
 		
 		// Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
