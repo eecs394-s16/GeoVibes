@@ -28,7 +28,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       }
 
       var xobj = new XMLHttpRequest();
-      var url = "https://api.twitter.com/1.1/search/tweets.json?q=" +
+      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets?q=" + 
                 encodeURI(q) +
                 "&lat="+
                 lat +
