@@ -5,9 +5,9 @@
     
 
   	<title>GeoVibes</title>
-
+        <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/components/supersonic/css/supersonic.css">
-  	<link rel="stylesheet" href="/stylesheets/application.css">
+  	<link rel="stylesheet" href="../stylesheets/application.css">
   	<link rel="import" href="/components/supersonic/components/import.html">
 
   	<script src="http://localhost/cordova.js"></script>
@@ -15,7 +15,6 @@
   	<script src="/components/angular/angular.js"></script>
   	<script src="/components/supersonic/supersonic.js"></script>
   	<script src="/components/webcomponentsjs/webcomponents.js"></script>
-
   	<script src="/scripts/application.js"></script>
   	</div>
     
@@ -32,15 +31,15 @@
     	</super-navbar-title>
 	</super-navbar>
     
-    <h1 style="font-family:Verdana;">Where's the vibe?</h1>
-    <h5 style="font-family:Verdana;">Search a location to check out what the vibe is.</h5>
-<hr style="border: black solid 1px;">
+    <h1 style="font-family: 'Noto Sans', sans-serif; color:cadetblue;"><strong>Where's the vibe?</strong></h1>
+    <h5 style="font-family: 'Noto Sans', sans-serif;">Search a location to check out what the vibe is.</h5>
+<hr>
 	<input id="pac-input" class="controls" type="text" placeholder="Search">
-	<div id="googleMap" style="width:100%;height:480px;"></div>
+	<div id="googleMap" style="width:100%;height:400px;"></div>
     <br>
     
     
-    <div id="LegendIcon" style="background-color:white;padding:5px;width:80px; border:blue solid 2px; margin:2px;">
+    <div id="LegendIcon">
   		<h4>Legend</h4>
         <p><div style="width: 10px; height: 10px; background-color:red"></div> Lit</p>
     	<p><div style="width: 10px; height: 10px; background-color:blue"></div> Lame</p>
