@@ -28,16 +28,14 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       }
 
       var xobj = new XMLHttpRequest();
-      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets?q=" + 
-                encodeURI(q) +
-                "&lat="+
-                lat +
-                "&long="+
-                longi;
+
+      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets?q=Evanston";
          
-      xobj.open("GET", url, true);
+      xobj.open('GET', url, true);
      
       xobj.onreadystatechange = function() {
+
+       document.getElementById('aaa').innerHTML = xobj.status;
        if (xobj.readyState == 4 && xobj.status == "200"){
          var json = JSON.parse(xobj.responseText);
          getTweetContentSentiment(json, result);       
@@ -144,7 +142,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         console.info(tweets.length + "circle");
         for(var t = 0; t < tweets.length; t++){
 
-          document.getElementById("aaa").innerHTML = tweets[t]["content"];
 
           var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
           var location = new google.maps.Circle({
