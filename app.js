@@ -25,7 +25,7 @@ var express = require('express'),
       config.accessTokenSecret, //test user secret
       function (e, data, result){
         if (e) console.error(e);
-        res.json(data);
+        res.json(config);
         console.log(data);
         // console.log(require('util').inspect(data));
       }
