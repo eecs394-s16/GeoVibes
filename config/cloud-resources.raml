@@ -9,15 +9,15 @@ traits:
           steroidsApiKey:
             type: string
             example: exampleapikey
-            default: 6fe51739e855f550aad73e80d32ed4a8ca13a1c7c51bc2c35162c6fe2dba55e1
+            default: 3cab84b02b6e1ea1baef775bca68e4cec0f0c59b17ea318105be2b687257ef76
           steroidsAppId:
             type: integer
             example: 1234
-            default: 113774
+            default: 114667
   
 schemas:
-  - Tweet_collection: '{"$schema":"http://json-schema.org/schema","title":"Tweet collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"latitude":{"type":"string"},"longitude":{"type":"string"},"sentiment":{"type":"string"},"time":{"type":"string"},"city":{"type":"string"},"state":{"type":"string"}},"required":[]}}}}'
-  - Tweet_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"object":{"type":"object","properties":{"latitude":{"type":"string"},"longitude":{"type":"string"},"sentiment":{"type":"string"},"time":{"type":"string"},"city":{"type":"string"},"state":{"type":"string"}},"required":[]}}}'
+  - Tweet_collection: '{"$schema":"http://json-schema.org/schema","title":"Tweet collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"city":{"type":"string"},"content":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"id":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"}},"required":[]}}}}'
+  - Tweet_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"object":{"type":"object","properties":{"city":{"type":"string"},"content":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"id":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"}},"required":[]}}}'
 
 resourceTypes:
   - dolan_db_collection:

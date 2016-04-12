@@ -143,25 +143,28 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         });
 
         for(var t = 0; t < tweets.length; t++){
+
+          document.getElementById("aaa").innerHTML = tweets[t]["content"];
           var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
           var location = new google.maps.Circle({
             center:latLongPair,
-            radius:5,
+            radius:100,
             strokeColor:legend[tweets[t]["sentiment"]],
             strokeOpacity:0.8,
             strokeWeight:2,
             fillColor:legend[tweets[t]["sentiment"]],
             fillOpacity:0.4
           });
+          location.setMap(map);
 
-          var infowindow = new google.maps.InfoWindow({
-            content:tweets[t]["content"]
-          });
+          // var infowindow = new google.maps.InfoWindow({
+          //   content:tweets[t]["content"]
+          // });
 
-          google.maps.event.addListener(location, 'click', function(ev){
-              infowindow.setPosition(ev.latLng);
-              infowindow.open(map);
-          });
+          // google.maps.event.addListener(location, 'click', function(ev){
+          //     infowindow.setPosition(ev.latLng);
+          //     infowindow.open(map);
+          // });
 
         }
 
