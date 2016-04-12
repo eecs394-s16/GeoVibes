@@ -25,7 +25,9 @@ var express = require('express'),
       config.accessTokenSecret, //test user secret
       function (e, data, result){
         if (e) console.error(e);
-        res.status(200).json(data);
+        res.status(200);
+        res.addHeader("Access-Control-Allow-Origin","*");
+        res.json(data);
         console.log(data);
         // console.log(require('util').inspect(data));
       }
@@ -50,7 +52,9 @@ var express = require('express'),
       config.accessTokenSecret, //test user secret
       function (e, data, result){
         if (e) console.error(e);
-        res.status(200).json(data);
+        res.status(200);
+        res.addHeader("Access-Control-Allow-Origin","*");
+        res.json(data);
         console.log(data);
         // console.log(require('util').inspect(data));
       }
