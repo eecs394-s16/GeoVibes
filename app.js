@@ -1,58 +1,56 @@
 var express = require('express'),
-	app = Express(),
-	Twitter = require('twitter-node-client').Twitter,
-	tweets = {};
+  app = express(),
+  Twitter = require('twitter'),
+  config = require('./config.js'),
+  OAuth = require('oauth'),
+  t = {test:'hi'};
 
-//Callback functions
-    var error = function (err, response, body) {
-        console.log('ERROR [%s]', err);
-    };
-    var success = function (data) {
-        console.log('Data [%s]', data);
-        tweets = data;
-    };
+  var port = process.env.PORT || 8000;
 
-    var Twitter = require('twitter-node-client').Twitter;
+  // //Get this data from your twitter apps dashboard
+  // var client = new Twitter({
+  //     "consumerKey": config.consumerKey,
+  //     "consumerSecret": config.consumerSecret,
+  //     "accessToken": config.accessToken,
+  //     "accessTokenSecret": config.accessTokenSecret,
+  //     "callBackUrl": "http://placeholder.com"
+  // });
+ 
+  // var params = {screen_name: 'elicohen2018'};
 
-    //Get this data from your twitter apps dashboard
-    var config = {
-        "consumerKey": "GJpX8CFvUyNww23DTQLWqAVXJ",
-        "consumerSecret": "wSpJHqKXc2xMF9dmN7Wm6ncKDAeuIFMgSG1oXBVu2AtRW37b9Z",
-        "accessToken": "717405588926382080-BX0cWdn3jqmWtt8tAKtsVLmMHPFkJh2",
-        "accessTokenSecret": "Cjmv9y3Jw36h7pOWCpR1H1YFEptPsflR88BWDkcoA7Mhl",
-        "callBackUrl": "http://www.google.com"
-    }
+  // client.get('statuses/user_timeline', params, function(error, tweets, response){
+  //   if (!error) {
+  //     console.log(tweets);
+  //     t = tweets;
+  //   } else {
+  //     console.log(error);
+  //   }
+  // });
 
-    var twitter = new Twitter(config);
 
-    //Example calls
 
-    // twitter.getUserTimeline({ screen_name: 'BoyCook', count: '10'}, error, success);
+  app.get('/',function(req,res){
 
-    // twitter.getMentionsTimeline({ count: '10'}, error, success);
+    var oauth = new OAuth.OAuth(
+      'https://api.twitter.com/oauth/request_token',
+      'https://api.twitter.com/oauth/access_token',
+      config.consumerKey,
+      config.consumerSecret,
+      '1.0A',
+      null,
+      'HMAC-SHA1'
+    );
 
-    // twitter.getHomeTimeline({ count: '10'}, error, success);
+    oauth.get(
+      'https://api.twitter.com/1.1/geo/search.json?query=Evanston',
+      config.accessToken, //test user token
+      config.accessTokenSecret, //test user secret            
+      function (e, data, result){
+        if (e) console.error(e);   
+        res.json(data);
+        console.log(data);   
+        // console.log(require('util').inspect(data));    
+      });
+  })
 
-    // twitter.getReTweetsOfMe({ count: '10'}, error, success);
-
-    // twitter.getTweet({ id: '1111111111'}, error, success);
-
-    twitter.getCustomApiCall('/statuses/filter.json',{ id: '412312323', latitude: '-123.044,36.846', longitude: '-121.591,38.352'}, error, success);
-
-    app.get('/',function(req,res){
-    	res.json(data);
-    })
-
-    //
-    // Get 10 tweets containing the hashtag haiku
-    //
-
-    // twitter.getSearch({'q':'#haiku','count': 10}, error, success);
-
-    //
-    // Get 10 popular tweets with a positive attitude about a movie that is not scary 
-    //
-
-    // twitter.getSearch({'q':' movie -scary :) since:2013-12-27', 'count': 10, 'result\_type':'popular'}, error, success);
-
-    app.listen(3000);
+  app.listen(port);
