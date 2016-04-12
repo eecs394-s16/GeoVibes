@@ -3,6 +3,6 @@ dist/*.nothing
 node_modules
 bower_components
 .sass-cache/
-logs/
+~/logs
 ~/config
 config.js
