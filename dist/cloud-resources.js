@@ -5,8 +5,8 @@ window.ag.data = {
   "options": {
     "baseUrl": "https://rest-api.appgyver.com/v2",
     "headers": {
-      "steroidsApiKey": "3cab84b02b6e1ea1baef775bca68e4cec0f0c59b17ea318105be2b687257ef76",
-      "steroidsAppId": 114667
+      "steroidsApiKey": "413ed5a5110305286b7e7db15b43cc7706574992504ae52fcf1c8da7854cdf4b",
+      "steroidsAppId": 114672
     }
   },
   "resources": {
@@ -19,6 +19,12 @@ window.ag.data = {
           "content": {
             "type": "string"
           },
+          "longtitude": {
+            "type": "string"
+          },
+          "lattitude": {
+            "type": "string"
+          },
           "sentiment": {
             "type": "string"
           },
@@ -28,15 +34,15 @@ window.ag.data = {
           "username": {
             "type": "string"
           },
-          "id": {
-            "type": "string",
-            "identity": true
-          },
           "latitude": {
             "type": "string"
           },
           "longitude": {
             "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "identity": true
           }
         },
         "identifier": "id"
