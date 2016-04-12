@@ -9,16 +9,16 @@ module.exports =
       id: "index"
       location: "example#getting-started" # Supersonic module#view type navigation
     }
-    {
-      title: "Settings"
-      id: "settings"
-      location: "example#settings"
-    }
-    {
-      title: "Internet"
-      id: "internet"
-      location: "http://google.com" # URLs are supported!
-    }
+#    {
+#      title: "Settings"
+#      id: "settings"
+#      location: "example#settings"
+#    }
+#    {
+#      title: "Internet"
+#      id: "internet"
+#      location: "http://google.com" # URLs are supported!
+#    }
     {
       title: "Tweet"
       id: "internet"
@@ -30,16 +30,16 @@ module.exports =
   # rootView:
   #   location: "example#getting-started"
 
-  preloads: [
-    {
-      id: "learn-more"
-      location: "example#learn-more"
-    }
-    {
-      id: "using-the-scanner"
-      location: "example#using-the-scanner"
-    }
-  ]
+#  preloads: [
+#    {
+#      id: "learn-more"
+#      location: "example#learn-more"
+#    }
+#    {
+#      id: "using-the-scanner"
+#      location: "example#using-the-scanner"
+#    }
+#  ]
 
   # drawers:
   #   left:

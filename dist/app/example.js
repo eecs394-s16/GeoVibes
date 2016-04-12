@@ -121,7 +121,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         //sets center to be user location
         var mapProp = {
           center:userLoc,
-          zoom:10,
+          zoom:12,
           panControl:true,
           zoomControl:true,
           mapTypeControl:true,

@@ -4,7 +4,7 @@
  ***********************************************************/
 
 navigation-bar {
-  background-color: #00B5FF;
+  background-color: cadetblue;
   color: #ffffff;
   padding-left: 6px;
   padding-right: 6px;
@@ -44,12 +44,12 @@ tab-bar {
 
 tab-bar tab-bar-item {
   color: #b0b1b4;
-  font-family: "Roboto";
+  font-family: 'Noto Sans', sans-serif;
   font-size: 10px;
 }
 
 tab-bar tab-bar-item:selected {
-  color: red;
+  color: cadetblue;
 }
 
 tab-bar divider {
@@ -57,7 +57,7 @@ tab-bar divider {
 }
 
 tab-bar tab-bar-item marker-top:selected {
-  background-color: red;
+  background-color: cadetblue;
 }
 
 tab-bar-item#settings {

@@ -1,14 +1,4 @@
 {
-  "preloads": [
-    {
-      "id": "learn-more",
-      "location": "http://localhost/app/example/learn-more.html"
-    },
-    {
-      "id": "using-the-scanner",
-      "location": "http://localhost/app/example/using-the-scanner.html"
-    }
-  ],
   "tabs": [
     {
       "position": 0,
@@ -18,18 +8,6 @@
     },
     {
       "position": 1,
-      "id": "settings",
-      "title": "Settings",
-      "target_url": "http://localhost/app/example/settings.html"
-    },
-    {
-      "position": 2,
-      "id": "internet",
-      "title": "Internet",
-      "target_url": "http://google.com"
-    },
-    {
-      "position": 3,
       "id": "internet",
       "title": "Tweet",
       "target_url": "http://localhost/app/tweet/index.html"
