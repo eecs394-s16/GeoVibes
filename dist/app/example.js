@@ -159,13 +159,15 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
           var infowindow = new google.maps.InfoWindow();
 
+          var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'"; 
+
           google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){ 
               return function() {
                   infowindow.setContent(content);
                   infowindow.setPosition(latLongPair);
                   infowindow.open(map);
               };
-          })(location,tweets[t]["content"],infowindow, latLongPair));
+          })(location,tweetContent,infowindow, latLongPair));
         }
         
 
