@@ -9,15 +9,15 @@ traits:
           steroidsApiKey:
             type: string
             example: exampleapikey
-            default: 413ed5a5110305286b7e7db15b43cc7706574992504ae52fcf1c8da7854cdf4b
+            default: a8632d74cec2df8c96e94a6caea3b7132bb01d62f40448dadec0d81e2c920645
           steroidsAppId:
             type: integer
             example: 1234
-            default: 114672
+            default: 115029
   
 schemas:
-  - Tweet_collection: '{"$schema":"http://json-schema.org/schema","title":"Tweet collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"city":{"type":"string"},"content":{"type":"string"},"longtitude":{"type":"string"},"lattitude":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"},"id":{"type":"string"}},"required":[]}}}}'
-  - Tweet_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"object":{"type":"object","properties":{"city":{"type":"string"},"content":{"type":"string"},"longtitude":{"type":"string"},"lattitude":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"},"id":{"type":"string"}},"required":[]}}}'
+  - Tweet_collection: '{"$schema":"http://json-schema.org/schema","title":"Tweet collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"city":{"type":"string"},"content":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"},"id":{"type":"string"}},"required":[]}}}}'
+  - Tweet_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical Tweet representation","properties":{"object":{"type":"object","properties":{"city":{"type":"string"},"content":{"type":"string"},"sentiment":{"type":"string"},"state":{"type":"string"},"username":{"type":"string"},"latitude":{"type":"string"},"longitude":{"type":"string"},"id":{"type":"string"}},"required":[]}}}'
 
 resourceTypes:
   - dolan_db_collection:
