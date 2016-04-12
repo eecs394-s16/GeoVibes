@@ -20,7 +20,7 @@ var express = require('express'),
     );
 
     oauth.get(
-      'https://api.twitter.com/1.1/search/tweets?query='+req.query.query,
+      'https://api.twitter.com/1.1/search/tweets.json?query='+req.query.query,
       config.accessToken, //test user token
       config.accessTokenSecret, //test user secret
       function (e, data, result){
@@ -45,7 +45,7 @@ var express = require('express'),
     );
 
     oauth.get(
-      'https://api.twitter.com/1.1/geo/reverse_geocode?lat='+req.query.lat+'&long='+req.query.long,
+      'https://api.twitter.com/1.1/geo/reverse_geocode.json?lat='+req.query.lat+'&long='+req.query.long,
       config.accessToken, //test user token
       config.accessTokenSecret, //test user secret
       function (e, data, result){
