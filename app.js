@@ -1,58 +1,60 @@
 var express = require('express'),
-	app = Express(),
-	Twitter = require('twitter-node-client').Twitter,
-	tweets = {};
+  app = express(),
+  Twitter = require('twitter'),
+  config = require('./config.js'),
+  OAuth = require('oauth'),
+  t = {test:'hi'};
 
-//Callback functions
-    var error = function (err, response, body) {
-        console.log('ERROR [%s]', err);
-    };
-    var success = function (data) {
-        console.log('Data [%s]', data);
-        tweets = data;
-    };
+  var port = process.env.PORT || 8000;
 
-    var Twitter = require('twitter-node-client').Twitter;
+  app.get('/search/tweets',function(req,res){
 
-    //Get this data from your twitter apps dashboard
-    var config = {
-        "consumerKey": "GJpX8CFvUyNww23DTQLWqAVXJ",
-        "consumerSecret": "wSpJHqKXc2xMF9dmN7Wm6ncKDAeuIFMgSG1oXBVu2AtRW37b9Z",
-        "accessToken": "717405588926382080-BX0cWdn3jqmWtt8tAKtsVLmMHPFkJh2",
-        "accessTokenSecret": "Cjmv9y3Jw36h7pOWCpR1H1YFEptPsflR88BWDkcoA7Mhl",
-        "callBackUrl": "http://www.google.com"
-    }
+    var oauth = new OAuth.OAuth(
+      'https://api.twitter.com/oauth/request_token',
+      'https://api.twitter.com/oauth/access_token',
+      config.consumerKey,
+      config.consumerSecret,
+      '1.0A',
+      null,
+      'HMAC-SHA1'
+    );
 
-    var twitter = new Twitter(config);
+    oauth.get(
+      'https://api.twitter.com/1.1/search/tweets?query='+req.query.query,
+      config.accessToken, //test user token
+      config.accessTokenSecret, //test user secret
+      function (e, data, result){
+        if (e) console.error(e);
+        res.json(data);
+        console.log(data);
+        // console.log(require('util').inspect(data));
+      }
+    );
+  });
 
-    //Example calls
+  app.get('/geo/reverse_geocode',function(req,res){
 
-    // twitter.getUserTimeline({ screen_name: 'BoyCook', count: '10'}, error, success);
+    var oauth = new OAuth.OAuth(
+      'https://api.twitter.com/oauth/request_token',
+      'https://api.twitter.com/oauth/access_token',
+      config.consumerKey,
+      config.consumerSecret,
+      '1.0A',
+      null,
+      'HMAC-SHA1'
+    );
 
-    // twitter.getMentionsTimeline({ count: '10'}, error, success);
+    oauth.get(
+      'https://api.twitter.com/1.1/geo/reverse_geocode?lat='+req.query.lat+'&long='+req.query.long,
+      config.accessToken, //test user token
+      config.accessTokenSecret, //test user secret
+      function (e, data, result){
+        if (e) console.error(e);
+        res.json(data);
+        console.log(data);
+        // console.log(require('util').inspect(data));
+      }
+    );
+  });
 
-    // twitter.getHomeTimeline({ count: '10'}, error, success);
-
-    // twitter.getReTweetsOfMe({ count: '10'}, error, success);
-
-    // twitter.getTweet({ id: '1111111111'}, error, success);
-
-    twitter.getCustomApiCall('/statuses/filter.json',{ id: '412312323', latitude: '-123.044,36.846', longitude: '-121.591,38.352'}, error, success);
-
-    app.get('/',function(req,res){
-    	res.json(data);
-    })
-
-    //
-    // Get 10 tweets containing the hashtag haiku
-    //
-
-    // twitter.getSearch({'q':'#haiku','count': 10}, error, success);
-
-    //
-    // Get 10 popular tweets with a positive attitude about a movie that is not scary 
-    //
-
-    // twitter.getSearch({'q':' movie -scary :) since:2013-12-27', 'count': 10, 'result\_type':'popular'}, error, success);
-
-    app.listen(3000);
+  app.listen(port);
