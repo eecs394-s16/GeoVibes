@@ -13,7 +13,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     function getUserLocation(){
       supersonic.device.geolocation.getPosition().then( function(position) {
         var result = {"latitude": position.coords.latitude, "longitude": position.coords.longitude};
-        var query = "";
+        var query = "evanston";
         getTweetsFromLocation(query, position.coords.latitude, position.coords.longitude, result);
         initializeMap(position.coords.latitude, position.coords.longitude);
       });
@@ -28,21 +28,23 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       }
 
       var xobj = new XMLHttpRequest();
-
-      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets?q=Evanston";
-         
+      // var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets";
+      var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
+       // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
       xobj.open('GET', url, true);
-     
+     console.info("ssss" +xobj.status);
       xobj.onreadystatechange = function() {
 
-       // document.getElementById('aaa').innerHTML = xobj.status;
+       // document.getElementById('aaa').innerHTML = ''+xobj.status+xobj.responseText;
        if (xobj.readyState == 4 && xobj.status == "200"){
+
          var json = JSON.parse(xobj.responseText);
          getTweetContentSentiment(json, result);       
        }
        else{
         console.log("Error in getTweetsFromLocation");
         console.log("xobj.status = " + xobj.status);
+        console.log("response:" + xobj.responseText);
        }
       }
       xobj.send();
