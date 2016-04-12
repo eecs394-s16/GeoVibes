@@ -157,16 +157,19 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           });
           location.setMap(map);
 
-          // var infowindow = new google.maps.InfoWindow({
-          //   content:tweets[t]["content"]
-          // });
+          // document.getElementById("aaa").innerHTML = tweets[0]["content"];
 
-          // google.maps.event.addListener(location, 'click', function(ev){
-          //     infowindow.setPosition(ev.latLng);
-          //     infowindow.open(map);
-          // });
+          var infowindow = new google.maps.InfoWindow();
 
+          google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){ 
+              return function() {
+                  infowindow.setContent(content);
+                  infowindow.setPosition(latLongPair);
+                  infowindow.open(map);
+              };
+          })(location,tweets[t]["content"],infowindow, latLongPair));
         }
+        
 
 
         // var markers = [];
@@ -215,6 +218,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         // });
 
     });
+
+
   };
           
       
