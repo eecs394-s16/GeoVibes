@@ -141,10 +141,11 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
-
+        console.info(tweets.length + "circle");
         for(var t = 0; t < tweets.length; t++){
 
           document.getElementById("aaa").innerHTML = tweets[t]["content"];
+
           var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
           var location = new google.maps.Circle({
             center:latLongPair,
