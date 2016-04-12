@@ -20,7 +20,7 @@ var express = require('express'),
     );
 
     oauth.get(
-      'https://api.twitter.com/1.1/search/tweets.json?query='+req.query.query,
+      'https://api.twitter.com/1.1/search/tweets.json?q='+req.query.q,
       config.accessToken, //test user token
       config.accessTokenSecret, //test user secret
       function (e, data, result){
