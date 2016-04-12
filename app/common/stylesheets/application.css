@@ -1,11 +1,11 @@
 .supersonic-navbar-mock {
-  background-color: red !important;
+  background-color: cadetblue !important;
   text-align: center;
   font-weight: 600;
 }
 
 hr {
-    border: black solid 1px;
+    border: cadetblue solid 1px;
 }
 
 #LegendIcon {
