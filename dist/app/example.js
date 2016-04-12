@@ -35,7 +35,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
      
       xobj.onreadystatechange = function() {
 
-       document.getElementById('aaa').innerHTML = xobj.status;
+       // document.getElementById('aaa').innerHTML = xobj.status;
        if (xobj.readyState == 4 && xobj.status == "200"){
          var json = JSON.parse(xobj.responseText);
          getTweetContentSentiment(json, result);       

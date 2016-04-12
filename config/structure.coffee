@@ -19,11 +19,11 @@ module.exports =
 #      id: "internet"
 #      location: "http://google.com" # URLs are supported!
 #    }
-    {
-      title: "Tweet"
-      id: "internet"
-      location: "tweet#index" 
-    }
+#    {
+#      title: "Tweet"
+#      id: "internet"
+#      location: "tweet#index" 
+#    }
 
   ]
 
