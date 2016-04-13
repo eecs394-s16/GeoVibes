@@ -29,13 +29,13 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
       var xobj = new XMLHttpRequest();
       // var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets";
-      var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
-       // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
+      // var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
+       var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
       xobj.open('GET', url, true);
-     console.info("ssss" +xobj.status);
+      console.info("ssss" +xobj.status);
       xobj.onreadystatechange = function() {
 
-       // document.getElementById('aaa').innerHTML = ''+xobj.status+xobj.responseText;
+       document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
        if (xobj.readyState == 4 && xobj.status == "200"){
 
          var json = JSON.parse(xobj.responseText);
@@ -142,7 +142,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     };
 
     function initializeMap(userLat, userLong) {
-
+      debugger;
       var legend = {
         "positive": "green",
         "negative": "red",
@@ -161,7 +161,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
       });
       Tweet.findAll().then(function(tweets){
-
+        // debugger;
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);

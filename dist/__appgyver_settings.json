@@ -8,6 +8,9 @@
     }
   ],
   "configuration": {
-    "extra_response_headers": {}
+    "extra_response_headers": {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type, X-Requested-With"
+    }
   }
 }
