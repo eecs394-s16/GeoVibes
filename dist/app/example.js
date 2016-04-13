@@ -28,14 +28,14 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       }
 
       var xobj = new XMLHttpRequest();
-      // var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets";
+      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets";
       // var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
-       var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
+       // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
       xobj.open('GET', url, true);
       console.info("ssss" +xobj.status);
       xobj.onreadystatechange = function() {
 
-       document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
+       // document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
        if (xobj.readyState == 4 && xobj.status == "200"){
 
          var json = JSON.parse(xobj.responseText);
@@ -72,14 +72,49 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         };
         xobj.open("POST", url, true);
         xobj.send("text=" + tweetContent);
+        document.getElementById('aaa').innerHTML = "state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText;
         tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
       }
       result["tweets"] = tweets;
+
+      var Tweet = supersonic.data.model('Tweet');
+      Tweet.findAll().then(function(tweets)
+      {
+        for(var i = 0; i < tweets.length; i++)
+        {
+          tweets[i].delete().then(function(){
+            console.log("delete" + i);
+          });
+        }
+
+      });
       moveDataToDatabase(result);
 
     };
+    function trySentiment(tweetContent){
+      // debugger;
+      var xobj = new XMLHttpRequest();
+      var sentiment;
+        var url = "http://text-processing.com/api/sentiment/";
+        xobj.onreadystatechange = function() {
+          document.getElementById('aaa').innerHTML = 'here: '+ xobj.status;
+          console.info("state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText);
+          if (xobj.readyState == 4 && xobj.status == 200) {
+            var json = JSON.parse(xobj.responseText);
+            sentiment = json["label"];
+          }
+          else{
+            sentiment = "neutral";
+          }
+        };
+        xobj.open("POST", url, true);
+        xobj.send("text=" + tweetContent);
+
+        return sentiment;
+    }
 
     function moveDataToDatabase(result){
+
 
       for(var r = 0; r < result["tweets"].length; r++){
         if(r%2 == 0)
@@ -93,14 +128,16 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           longi = -87.678484 - 0.02 *Math.random();
         }
         var temp = Math.random();
-        var var3 = "";
+        
         if (temp  < 0.4)
           var3 = "neutral";
         else if(temp > 0.6)
-          var3 = "positive";
+          var3 = "pos";
         else
-          var3 = "negative";
+          var3 = "neg";
+
         var curr = result["tweets"][r];
+        // var var3 = trySentiment(curr["tweet_content"]);
         var tweetObj = {
           city: "Evanston",
           content: curr["tweet_content"],
@@ -126,7 +163,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         content: "hello",
         latitude: var1,// 42.052090 ,
         longitude: var2,// -87.666190 , 
-        sentiment: "positive",
+        sentiment: "pos",
         // sentiment: "negative",
         state: "IL",
         username: "user1",
@@ -142,24 +179,24 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     };
 
     function initializeMap(userLat, userLong) {
-      debugger;
+      // debugger;
       var legend = {
-        "positive": "green",
-        "negative": "red",
+        "pos": "green",
+        "neg": "red",
         "neutral": "gray",
       };
 
       var Tweet = supersonic.data.model('Tweet');
-      Tweet.findAll().then(function(tweets)
-      {
-        for(var i = 0; i < tweets.length; i++)
-        {
-          tweets[i].delete().then(function(){
-            console.log("delete" + i);
-          });
-        }
+      // Tweet.findAll().then(function(tweets)
+      // {
+      //   for(var i = 0; i < tweets.length; i++)
+      //   {
+      //     tweets[i].delete().then(function(){
+      //       console.log("delete" + i);
+      //     });
+      //   }
 
-      });
+      // });
       Tweet.findAll().then(function(tweets){
         // debugger;
         // Create the search box and link it to the UI element.
@@ -226,8 +263,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         console.info(tweets.length + "circle");
         for(var t = 0; t < tweets.length; t++){
 
-          debugger;
+          // debugger;
           var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
+
+          // var var3 = trySentiment(tweets[t]["content"]);
+          // tweets[t]["sentiment"] = var3;
+          console.info("here123:" + tweets[t]["sentiment"]);
           var location = new google.maps.Circle({
 
             center:latLongPair,
