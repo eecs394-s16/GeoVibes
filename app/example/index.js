@@ -51,33 +51,38 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       xobj.send();
     };
 
-    function getTweetContentSentiment(json, result){
-      var tweets = [];
-      var statuses = json["statuses"];
-      for(var s = 0; s < statuses.length; s++){
-        var userName = statuses[s]["user"]["name"];
-        var tweetContent = statuses[s]["text"];
-        var sentiment;
 
+    function makeSentimentAPICall(statuses){
+      return new Promise(function (resolve, reject){
+        // var userName = statuses[s]["user"]["name"];
+        // var tweetContent = statuses[s]["text"];
+        var sentiment;
         //get sentiment of tweet
         var xobj = new XMLHttpRequest();
         var url = "http://text-processing.com/api/sentiment/";
         xobj.onreadystatechange = function() {
           if (xobj.readyState == 4 && xobj.status == 200) {
-            var json = JSON.parse(xobj.responseText);
-            sentiment = json["label"];
+            // var json = JSON.parse(xobj.responseText);
+            // sentiment = json["label"];
+            resolve(xobj.response);
           }
           else{
-            sentiment = "neutral";
+            // sentiment = "didn't work";
+            reject(Error(xobj.statusText));
           }
         };
         xobj.open("POST", url, true);
         xobj.send("text=" + tweetContent);
-        document.getElementById('aaa').innerHTML = "state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText;
-        tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
-      }
-      result["tweets"] = tweets;
 
+        // tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
+      });
+    };
+
+    function getTweetContentSentiment(json, result){
+      var statuses = json["statuses"];
+      var prevPromise = Promise.resolve();
+
+      //database cleaning
       var Tweet = supersonic.data.model('Tweet');
       Tweet.findAll().then(function(tweets)
       {
@@ -89,10 +94,51 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         }
 
       });
-      moveDataToDatabase(result);
+
+
+      statuses.forEach(function(s){
+        prevPromise = prevPromise.then(function(){
+          return makeSentimentAPICall(s);
+        }).then(function(data){
+          var sentiment = JSON.parse(data)["label"];
+          var userName = s["user"]["name"];
+          var tweetContent = s["text"];
+
+          var result = {"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment};
+          moveDataToDatabase(result);
+
+        }).catch(function(error){
+          console.log("getTweetContentSentiment doesn't work");
+        });
+      });
+
+      // for(var s = 0; s < statuses.length; s++){
+        // var userName = statuses[s]["user"]["name"];
+        // var tweetContent = statuses[s]["text"];
+        // var sentiment;
+
+        // //get sentiment of tweet
+        // var xobj = new XMLHttpRequest();
+        // var url = "http://text-processing.com/api/sentiment/";
+        // xobj.onreadystatechange = function() {
+        //   if (xobj.readyState == 4 && xobj.status == 200) {
+        //     var json = JSON.parse(xobj.responseText);
+        //     sentiment = json["label"];
+        //   }
+        //   else{
+        //     sentiment = "neutral";
+        //   }
+        // };
+        // xobj.open("POST", url, true);
+        // xobj.send("text=" + tweetContent);
+        // document.getElementById('aaa').innerHTML = "state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText;
+        // tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
+      // }
+
+
 
     };
-    function trySentiment(tweetContent){
+    var trySentiment = new Promise(function(tweetContent){
       // debugger;
       var xobj = new XMLHttpRequest();
       var sentiment;
@@ -103,22 +149,22 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           if (xobj.readyState == 4 && xobj.status == 200) {
             var json = JSON.parse(xobj.responseText);
             sentiment = json["label"];
+            resolve("stuff worked");
           }
           else{
             sentiment = "neutral";
+            reject(Error("it broke"));
           }
         };
         xobj.open("POST", url, true);
         xobj.send("text=" + tweetContent);
 
         return sentiment;
-    }
+    });
 
     function moveDataToDatabase(result){
 
-
-      for(var r = 0; r < result["tweets"].length; r++){
-        if(r%2 == 0)
+      if(r%2 == 0)
         {
           lat =  42.052844 + 0.02 *Math.random();
           longi = -87.678484 - 0.02 *Math.random();
@@ -155,27 +201,68 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         finalTweet.save().then(function(){
           console.log("Tweet object for " + tweetObj[username] + " successfully created!");
         });
-      }
-      var Tweet = supersonic.data.model('Tweet');
-      var var1 = 42.052090 + 0.01 ;//* Math.random();
-      var var2 =  -87.666190 + 0.01;// *Math.random();
-      var tweetObj = {
-        city: "Evanston",
-        content: "hello",
-        latitude: var1,// 42.052090 ,
-        longitude: var2,// -87.666190 ,
-        sentiment: "pos",
-        // sentiment: "negative",
-        state: "IL",
-        username: "user1",
-      };
 
-      var finalTweet = new Tweet(tweetObj);
-      finalTweet.save().then(function(){
-        console.log("Tweet object for " + tweetObj[username] + " successfully created!");
-      });
+      // for(var r = 0; r < result["tweets"].length; r++){
+      //   if(r%2 == 0)
+      //   {
+      //     lat =  42.052844 + 0.02 *Math.random();
+      //     longi = -87.678484 - 0.02 *Math.random();
+      //   }
+      //   else
+      //   {
+      //     lat =  42.052844 - 0.02 *Math.random();
+      //     longi = -87.678484 - 0.02 *Math.random();
+      //   }
+      //   var temp = Math.random();
+
+      //   if (temp  < 0.4)
+      //     var3 = "neutral";
+      //   else if(temp > 0.6)
+      //     var3 = "pos";
+      //   else
+      //     var3 = "neg";
+
+      //   var curr = result["tweets"][r];
+      //   // var var3 = trySentiment(curr["tweet_content"]);
+      //   var tweetObj = {
+      //     city: "Evanston",
+      //     content: curr["tweet_content"],
+      //     latitude: lat,
+      //     longitude: longi,
+      //     // sentiment: curr["sentiment"],
+
+      //     sentiment: var3,
+      //     state: "IL",
+      //     username: curr["user_name"],
+      //   };
+      //   var Tweet = supersonic.data.model('Tweet');
+      //   var finalTweet = new Tweet(tweetObj);
+      //   finalTweet.save().then(function(){
+      //     console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+      //   });
+      // }
 
 
+
+
+      // var Tweet = supersonic.data.model('Tweet');
+      // var var1 = 42.052090 + 0.01 ;//* Math.random();
+      // var var2 =  -87.666190 + 0.01;// *Math.random();
+      // var tweetObj = {
+      //   city: "Evanston",
+      //   content: "hello",
+      //   latitude: var1,// 42.052090 ,
+      //   longitude: var2,// -87.666190 ,
+      //   sentiment: "pos",
+      //   // sentiment: "negative",
+      //   state: "IL",
+      //   username: "user1",
+      // };
+
+      // var finalTweet = new Tweet(tweetObj);
+      // finalTweet.save().then(function(){
+      //   console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+      // });
 
     };
 
@@ -267,34 +354,38 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           // debugger;
           var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
 
-          // var var3 = trySentiment(tweets[t]["content"]);
+          var var3 = trySentiment(tweets[t]["content"]);
           // tweets[t]["sentiment"] = var3;
-          console.info("here123:" + tweets[t]["sentiment"]);
-          var location = new google.maps.Circle({
+          console.info("here123:" + var3);
 
-            center:latLongPair,
-            radius:100,
-            strokeColor:legend[tweets[t]["sentiment"]],
-            strokeOpacity:0.8,
-            strokeWeight:2,
-            fillColor:legend[tweets[t]["sentiment"]],
-            fillOpacity:0.4
-          });
-          location.setMap(map);
 
-          // document.getElementById("aaa").innerHTML = tweets[0]["content"];
 
-          var infowindow = new google.maps.InfoWindow();
+          // var location = new google.maps.Circle({
 
-          var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'";
+          //   center:latLongPair,
+          //   radius:100,
+          //   strokeColor:legend[tweets[t]["sentiment"]],
+          //   strokeOpacity:0.8,
+          //   strokeWeight:2,
+          //   fillColor:legend[tweets[t]["sentiment"]],
+          //   fillOpacity:0.4
+          // });
+          // location.setMap(map);
 
-          google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){
-              return function() {
-                  infowindow.setContent(content);
-                  infowindow.setPosition(latLongPair);
-                  infowindow.open(map);
-              };
-          })(location,tweetContent,infowindow, latLongPair));
+          // // document.getElementById("aaa").innerHTML = tweets[0]["content"];
+
+          // var infowindow = new google.maps.InfoWindow();
+
+
+          // var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'";
+
+          // google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){
+          //     return function() {
+          //         infowindow.setContent(content);
+          //         infowindow.setPosition(latLongPair);
+          //         infowindow.open(map);
+          //     };
+          // })(location,tweetContent,infowindow, latLongPair));
         }
 
     });
