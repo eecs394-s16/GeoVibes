@@ -376,6 +376,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           // tweets[t]["sentiment"] = var3;
           console.info("here123:" + var3);
 
+        }
+      });
+    }
+
 
 
           // var location = new google.maps.Circle({
@@ -404,15 +408,3 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           //         infowindow.open(map);
           //     };
           // })(location,tweetContent,infowindow, latLongPair));
-        }
-
-    });
-
-
-  };
-
-
-
-
-
-  });
