@@ -13,43 +13,61 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     function getUserLocation(){
       supersonic.device.geolocation.getPosition().then( function(position) {
         var query = "evanston";
-        tweetsFromApi = getTweetsFromLocation(query);
+        getTweetsFromLocation(query);
         initializeMap(position.coords.latitude, position.coords.longitude);
       });
     };
 
     //uses Twitter API call to search for a place that the user has searched
-    function getTweetsFromLocation(q, result){
+    function getTweetsFromLocation(q){
 
       var oauth = OAuth({
           consumer: {
-              public: '<your consumer key>',
-              secret: '<your consumer secret>'
-          }
+              public: 'GJpX8CFvUyNww23DTQLWqAVXJ',
+              secret: 'wSpJHqKXc2xMF9dmN7Wm6ncKDAeuIFMgSG1oXBVu2AtRW37b9Z'
+          },
+          signature_method: 'HMAC-SHA1'
       });
+      var token = {
+        public: '717405588926382080-BX0cWdn3jqmWtt8tAKtsVLmMHPFkJh2',
+        secret: 'Cjmv9y3Jw36h7pOWCpR1H1YFEptPsflR88BWDkcoA7Mhl'
+      };
       oauth.authorize(request, token);
-      var xobj = new XMLHttpRequest();
-      var url = "https://api.twitter.com/1.1/search/tweets.json?q="+q;
+      var request_data = {
+        url: 'https://api.twitter.com/1.1/search/tweets.json?q='+q,
+        method: 'GET'
+      };
+      $.ajax({
+        url: request_data.url,
+        type: request_data.method,
+        data: oauth.authorize(request_data, token)
+      }).done(function(data) {
+        //process your data here
+        dataJSON = JSON.parse(data);
+        getTweetContentSentiment(dataJSON);
+      });
+      // var xobj = new XMLHttpRequest();
+      // var url =
       // var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
        // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";
-      xobj.open('GET', url, true);
-      console.info("ssss" +xobj.status);
-      xobj.onreadystatechange = function() {
-
-       // document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
-       if (xobj.readyState == 4 && xobj.status == "200"){
-
-         var json = JSON.parse(xobj.responseText);
-         getTweetContentSentiment(json, result);
-       }
-       else{
-        console.log("Error in getTweetsFromLocation");
-        console.log("xobj.status = " + xobj.status);
-        console.log("response:" + xobj.responseText);
-       }
-      }
-      xobj.send();
-    };
+    //   xobj.open('GET', url, true);
+    //   console.info("ssss" +xobj.status);
+    //   xobj.onreadystatechange = function() {
+    //
+    //    // document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
+    //    if (xobj.readyState == 4 && xobj.status == "200"){
+    //
+    //      var json = JSON.parse(xobj.responseText);
+    //      getTweetContentSentiment(json, result);
+    //    }
+    //    else{
+    //     console.log("Error in getTweetsFromLocation");
+    //     console.log("xobj.status = " + xobj.status);
+    //     console.log("response:" + xobj.responseText);
+    //    }
+    //   }
+    //   xobj.send();
+    // };
 
 
     function makeSentimentAPICall(statuses){
@@ -78,7 +96,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
     };
 
-    function getTweetContentSentiment(json, result){
+    function getTweetContentSentiment(json){
       var statuses = json["statuses"];
       var prevPromise = Promise.resolve();
 

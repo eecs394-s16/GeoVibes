@@ -40,9 +40,9 @@
   <!-- Cloud resource definition file for Supersonic Data -->
   <script src="/cloud-resources.js"></script>
 	<div class="padding">
-    
+
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL-erbd04QacEbEY7ZXJ9F0tsC8dMQfOc&libraries=places"></script>
-    
+
 
   	<title>GeoVibes</title>
         <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -56,11 +56,18 @@
   	<script src="/components/supersonic/supersonic.js"></script>
   	<script src="/components/webcomponentsjs/webcomponents.js"></script>
   	<script src="/scripts/application.js"></script>
+		<!--oauth-->
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+		<script src="oauth-1.0a.js"></script>
+		<!--jquery-->
+		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
   	</div>
-    
+
 </head>
 
-		
+
 
 <body ng-app="SteroidsApplication">
 
@@ -70,15 +77,15 @@
     	<super-navbar-title ng-bind='geoVibesTitle'>
     	</super-navbar-title>
 	</super-navbar>
-    
+
     <h3 style="color:cadetblue;"><strong>Where are the good vibes?</strong></h3>
     <h5>Search a location to check out what the vibe is.</h5>
 <hr>
 	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:100%;"></center>
 	<center><div id="googleMap"></div></center>
     <br>
-    
-    
+
+
     <div id="LegendIcon">
   		<h4>Legend</h4>
         <p><div style="width: 10px; height: 10px; background-color:green"></div>Good Vibes</p>
@@ -93,6 +100,7 @@
 	</div>
 
 </body>
+
 
 </body>
 </html>

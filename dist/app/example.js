@@ -12,43 +12,62 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     function getUserLocation(){
       supersonic.device.geolocation.getPosition().then( function(position) {
-        var result = {"latitude": position.coords.latitude, "longitude": position.coords.longitude};
         var query = "evanston";
-        getTweetsFromLocation(query, position.coords.latitude, position.coords.longitude, result);
+        getTweetsFromLocation(query);
         initializeMap(position.coords.latitude, position.coords.longitude);
       });
     };
 
     //uses Twitter API call to search for a place that the user has searched
-    function getTweetsFromLocation(q, lat, longi, result){
-      if(lat == "0" && long == "0"){
-        //make database call to get most recent location
-        //lat = 
-        //long =
-      }
+    function getTweetsFromLocation(q){
 
-      var xobj = new XMLHttpRequest();
-      var url = "https://glacial-gorge-33330.herokuapp.com/search/tweets";
+      var oauth = OAuth({
+          consumer: {
+              public: 'GJpX8CFvUyNww23DTQLWqAVXJ',
+              secret: 'wSpJHqKXc2xMF9dmN7Wm6ncKDAeuIFMgSG1oXBVu2AtRW37b9Z'
+          },
+          signature_method: 'HMAC-SHA1'
+      });
+      var token = {
+        public: '717405588926382080-BX0cWdn3jqmWtt8tAKtsVLmMHPFkJh2',
+        secret: 'Cjmv9y3Jw36h7pOWCpR1H1YFEptPsflR88BWDkcoA7Mhl'
+      };
+      oauth.authorize(request, token);
+      var request_data = {
+        url: 'https://api.twitter.com/1.1/search/tweets.json?q='+q,
+        method: 'GET'
+      };
+      $.ajax({
+        url: request_data.url,
+        type: request_data.method,
+        data: oauth.authorize(request_data, token)
+      }).done(function(data) {
+        //process your data here
+        dataJSON = JSON.parse(data);
+        getTweetContentSentiment(dataJSON);
+      });
+      // var xobj = new XMLHttpRequest();
+      // var url =
       // var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
-       // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";  
-      xobj.open('GET', url, true);
-      console.info("ssss" +xobj.status);
-      xobj.onreadystatechange = function() {
-
-       // document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
-       if (xobj.readyState == 4 && xobj.status == "200"){
-
-         var json = JSON.parse(xobj.responseText);
-         getTweetContentSentiment(json, result);       
-       }
-       else{
-        console.log("Error in getTweetsFromLocation");
-        console.log("xobj.status = " + xobj.status);
-        console.log("response:" + xobj.responseText);
-       }
-      }
-      xobj.send();
-    };
+       // var url = "https://fast-headland-78383.herokuapp.com/search/tweets";
+    //   xobj.open('GET', url, true);
+    //   console.info("ssss" +xobj.status);
+    //   xobj.onreadystatechange = function() {
+    //
+    //    // document.getElementById('aaa').innerHTML = ''+xobj.status;//+xobj.responseText;
+    //    if (xobj.readyState == 4 && xobj.status == "200"){
+    //
+    //      var json = JSON.parse(xobj.responseText);
+    //      getTweetContentSentiment(json, result);
+    //    }
+    //    else{
+    //     console.log("Error in getTweetsFromLocation");
+    //     console.log("xobj.status = " + xobj.status);
+    //     console.log("response:" + xobj.responseText);
+    //    }
+    //   }
+    //   xobj.send();
+    // };
 
 
     function makeSentimentAPICall(statuses){
@@ -77,7 +96,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       });
     };
 
-    function getTweetContentSentiment(json, result){
+    function getTweetContentSentiment(json){
       var statuses = json["statuses"];
       var prevPromise = Promise.resolve();
 
@@ -133,8 +152,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         // document.getElementById('aaa').innerHTML = "state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText;
         // tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
       // }
-      
-      
+
+
 
     };
     var trySentiment = new Promise(function(tweetContent){
@@ -174,7 +193,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           longi = -87.678484 - 0.02 *Math.random();
         }
         var temp = Math.random();
-        
+
         if (temp  < 0.4)
           var3 = "neutral";
         else if(temp > 0.6)
@@ -200,6 +219,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         finalTweet.save().then(function(){
           console.log("Tweet object for " + tweetObj[username] + " successfully created!");
         });
+
       // for(var r = 0; r < result["tweets"].length; r++){
       //   if(r%2 == 0)
       //   {
@@ -212,7 +232,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //     longi = -87.678484 - 0.02 *Math.random();
       //   }
       //   var temp = Math.random();
-        
+
       //   if (temp  < 0.4)
       //     var3 = "neutral";
       //   else if(temp > 0.6)
@@ -242,7 +262,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
 
 
-      
+
       // var Tweet = supersonic.data.model('Tweet');
       // var var1 = 42.052090 + 0.01 ;//* Math.random();
       // var var2 =  -87.666190 + 0.01;// *Math.random();
@@ -250,19 +270,17 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //   city: "Evanston",
       //   content: "hello",
       //   latitude: var1,// 42.052090 ,
-      //   longitude: var2,// -87.666190 , 
+      //   longitude: var2,// -87.666190 ,
       //   sentiment: "pos",
       //   // sentiment: "negative",
       //   state: "IL",
       //   username: "user1",
       // };
-        
+
       // var finalTweet = new Tweet(tweetObj);
       // finalTweet.save().then(function(){
       //   console.log("Tweet object for " + tweetObj[username] + " successfully created!");
       // });
-      
-      
 
     };
 
@@ -304,7 +322,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           scaleControl:true,
           streetViewControl:true,
           overviewMapControl:true,
-          rotateControl:true, 
+          rotateControl:true,
           mapTypeId:google.maps.MapTypeId.ROADMAP
         };
 
@@ -315,7 +333,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
-          
+
          // Listen for the event fired when the user selects a prediction and retrieve
          // more details for that place.
          searchBox.addListener('places_changed', function() {
@@ -346,8 +364,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
            map.fitBounds(bounds);
          });
 
-          
-          
+
+
         console.info(tweets.length + "circle");
         for(var t = 0; t < tweets.length; t++){
 
@@ -376,9 +394,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
           // var infowindow = new google.maps.InfoWindow();
 
-          // var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'"; 
 
-          // google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){ 
+          // var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'";
+
+          // google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){
           //     return function() {
           //         infowindow.setContent(content);
           //         infowindow.setPosition(latLongPair);
@@ -386,15 +405,15 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           //     };
           // })(location,tweetContent,infowindow, latLongPair));
         }
-        
+
     });
 
 
   };
-          
-      
-   
-  
+
+
+
+
 
   });
 
