@@ -303,80 +303,86 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //   }
 
       // });
-      Tweet.findAll().then(function(tweets){
-        // debugger;
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        var LgdIcon = document.getElementById('LegendIcon');
+    //   Tweet.findAll().then(function(tweets){
+    //     // debugger;
+    //     // Create the search box and link it to the UI element.
+    //     var input = document.getElementById('pac-input');
+    //     var searchBox = new google.maps.places.SearchBox(input);
+    //     var LgdIcon = document.getElementById('LegendIcon');
 
-        var userLoc = new google.maps.LatLng(userLat,userLong);
+    //     var userLoc = new google.maps.LatLng(userLat,userLong);
 
-        //sets center to be user location
-        var mapProp = {
-          center:userLoc,
-          zoom:12,
-          panControl:true,
-          zoomControl:true,
-          mapTypeControl:true,
-          scaleControl:true,
-          streetViewControl:true,
-          overviewMapControl:true,
-          rotateControl:true,
-          mapTypeId:google.maps.MapTypeId.ROADMAP
-        };
+    //     //sets center to be user location
+    //     var mapProp = {
+    //       center:userLoc,
+    //       zoom:12,
+    //       panControl:true,
+    //       zoomControl:true,
+    //       mapTypeControl:true,
+    //       scaleControl:true,
+    //       streetViewControl:true,
+    //       overviewMapControl:true,
+    //       rotateControl:true,
+    //       mapTypeId:google.maps.MapTypeId.ROADMAP
+    //     };
 
-        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(LgdIcon);
+    //     var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    //     map.controls[google.maps.ControlPosition.RIGHT_TOP].push(LgdIcon);
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
+    //     // Bias the SearchBox results towards current map's viewport.
+    //     map.addListener('bounds_changed', function() {
+    //       searchBox.setBounds(map.getBounds());
+    //     });
 
-         // Listen for the event fired when the user selects a prediction and retrieve
-         // more details for that place.
-         searchBox.addListener('places_changed', function() {
-           var places = searchBox.getPlaces();
+    //      // Listen for the event fired when the user selects a prediction and retrieve
+    //      // more details for that place.
+    //      searchBox.addListener('places_changed', function() {
+    //        var places = searchBox.getPlaces();
 
-           if (places.length == 0) {
-             return;
-           }
+    //        if (places.length == 0) {
+    //          return;
+    //        }
 
-           // For each place, get the icon, name and location.
-           var bounds = new google.maps.LatLngBounds();
-           places.forEach(function(place) {
-             var icon = {
-               url: place.icon,
-               size: new google.maps.Size(71, 71),
-               origin: new google.maps.Point(0, 0),
-               anchor: new google.maps.Point(17, 34),
-               scaledSize: new google.maps.Size(25, 25)
-             };
+    //        // For each place, get the icon, name and location.
+    //        var bounds = new google.maps.LatLngBounds();
+    //        places.forEach(function(place) {
+    //          var icon = {
+    //            url: place.icon,
+    //            size: new google.maps.Size(71, 71),
+    //            origin: new google.maps.Point(0, 0),
+    //            anchor: new google.maps.Point(17, 34),
+    //            scaledSize: new google.maps.Size(25, 25)
+    //          };
 
-             if (place.geometry.viewport) {
-               // Only geocodes have viewport.
-               bounds.union(place.geometry.viewport);
-             } else {
-               bounds.extend(place.geometry.location);
-             }
-           });
-           map.fitBounds(bounds);
-         });
-
-
-
-        console.info(tweets.length + "circle");
-        for(var t = 0; t < tweets.length; t++){
-
-          // debugger;
-          var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
-
-          var var3 = trySentiment(tweets[t]["content"]);
-          // tweets[t]["sentiment"] = var3;
-          console.info("here123:" + var3);
+    //          if (place.geometry.viewport) {
+    //            // Only geocodes have viewport.
+    //            bounds.union(place.geometry.viewport);
+    //          } else {
+    //            bounds.extend(place.geometry.location);
+    //          }
+    //        });
+    //        map.fitBounds(bounds);
+    //      });
 
 
+
+    //     console.info(tweets.length + "circle");
+    //     for(var t = 0; t < tweets.length; t++){
+
+    //       // debugger;
+    //       var latLongPair = new google.maps.LatLng(tweets[t]["latitude"],tweets[t]["longitude"]);
+
+    //       var var3 = trySentiment(tweets[t]["content"]);
+    //       // tweets[t]["sentiment"] = var3;
+    //       console.info("here123:" + var3);
+
+    //     }
+    //   });
+
+    // }
+
+   };
+ }});
 
           // var location = new google.maps.Circle({
 
@@ -404,18 +410,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           //         infowindow.open(map);
           //     };
           // })(location,tweetContent,infowindow, latLongPair));
-        }
-
-    });
-
-
-  };
-
-
-
-
-
-  });
 
 angular
   .module('example')
