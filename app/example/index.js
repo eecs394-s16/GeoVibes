@@ -85,10 +85,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     	  searchBox.addListener('places_changed', function(){
     		  var places = searchBox.getPlaces();
           var name = places[0].name;
-          places = JSON.stringify(name);
-          getTweetsFromLocation(name);
-    		  document.getElementById("aaa").innerHTML = places + "";
-    		  console.info("places:" + places);
+          tweets = getTweetsFromLocation(name);
+          tweets = JSON.stringify(tweets);
+    		  document.getElementById("aaa").innerHTML = tweets + "";
+    		  console.info("tweets:" + tweets);
     	  });
 
 	  
