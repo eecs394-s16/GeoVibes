@@ -61,7 +61,15 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         "neg": "red",
         "neutral": "gray",
       };
-
-      var Tweet = supersonic.data.model('Tweet');
+	  
+	  var input = document.getElementById("pac-input");
+	  var searchBox = new google.maps.places.SearchBox(input);
+	  
+	  searchBox.addListener('places_changed'.function(){
+		  var places = searchBox.getPlaces();
+		  
+		  console.info(places);
+	  });
+	  
    }
  });
