@@ -26,7 +26,14 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         var tweets = JSON.parse(data);
         console.info(tweets);
         var tweetsString = JSON.stringify(tweets);
-        document.getElementById("aaa").innerHTML = tweetsString;
+        // document.getElementById("aaa").innerHTML = tweetsString;
+        var Tweet = supersonic.data.model('Tweet');
+        Tweet.findAll().then(function(allTweets){
+          for(var i = 0; i < allTweets.length; i++)
+          {
+            allTweets[i].delete();
+          }
+        });
         moveDataToDatabase(tweets);
       });
 

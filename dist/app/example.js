@@ -23,11 +23,18 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         url: "https://fast-headland-78383.herokuapp.com/search/tweets?q="+q,
         type: "GET"
       }).done(function(data) {
-        //process your data here
-        dataJSON = JSON.parse(data);
-       // document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON.statuses;
-       console.info(dataJSON);
-       moveDataToDatabase(dataJSON);
+        var tweets = JSON.parse(data);
+        console.info(tweets);
+        var tweetsString = JSON.stringify(tweets);
+        // document.getElementById("aaa").innerHTML = tweetsString;
+        var Tweet = supersonic.data.model('Tweet');
+        Tweet.findAll().then(function(allTweets){
+          for(var i = 0; i < allTweets.length; i++)
+          {
+            allTweets[i].delete();
+          }
+        });
+        moveDataToDatabase(tweets);
       });
 
     }
@@ -85,10 +92,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     	  searchBox.addListener('places_changed', function(){
     		  var places = searchBox.getPlaces();
           var name = places[0].name;
-          places = JSON.stringify(name);
           getTweetsFromLocation(name);
-    		  document.getElementById("aaa").innerHTML = places + "";
-    		  console.info("places:" + places);
     	  });
 
 	  
