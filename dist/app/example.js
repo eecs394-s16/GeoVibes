@@ -376,6 +376,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         dataJSON = JSON.parse(data);
        document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON.statuses;
        console.info(dataJSON);
+       moveDataToDatabase(dataJSON);
       });
 
     }
@@ -405,7 +406,26 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
 
     function moveDataToDatabase(result){
+        var Tweet = supersonic.data.model('Tweet');
+        for(var i = 0; i < result.statuses.length; i++)
+        {
+          var tweetObj = {
+            city : "N/A",
+            content : result.statuses[i].text,
+            id : "",
+            latitude : "N/A",
+            longitude : "N/A",
+            sentiment : "N/A",
+            state : "N/A",
+            username : result.statuses[i].user.name
+          }
+          var finalTweet = new Tweet(tweetObj);
+          finalTweet.save().then(function(){
+            console.info("insert the data: " + tweetObj.text);
+          });
 
+        }
+        
 
       // if(r%2 == 0)
       //   {
@@ -439,8 +459,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //     state: "IL",
       //     username: curr["user_name"],
       //   };
-      //   var Tweet = supersonic.data.model('Tweet');
-      //   var finalTweet = new Tweet(tweetObj);
+        
       //   finalTweet.save().then(function(){
       //     console.log("Tweet object for " + tweetObj[username] + " successfully created!");
       //   });
