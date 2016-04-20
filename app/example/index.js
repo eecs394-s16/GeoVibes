@@ -6,9 +6,6 @@ var GeoVibesApp = angular.module('example', [
 GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
 
-
-
-
 // if (typeof(module) !== 'undefined' && typeof(exports) !== 'undefined') {
 //     module.exports = OAuth;
 //     var CryptoJS = require("crypto-js");
@@ -372,32 +369,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     //uses Twitter API call to search for a place that the user has searched
     function getTweetsFromLocation(q){
 
-      var oauth = OAuth({
-          consumer: {
-              public: 'GJpX8CFvUyNww23DTQLWqAVXJ',
-              secret: 'wSpJHqKXc2xMF9dmN7Wm6ncKDAeuIFMgSG1oXBVu2AtRW37b9Z'
-          },
-          signature_method: 'HMAC-SHA1'
-      });
-      var token = {
-        public: '717405588926382080-BX0cWdn3jqmWtt8tAKtsVLmMHPFkJh2',
-        secret: 'Cjmv9y3Jw36h7pOWCpR1H1YFEptPsflR88BWDkcoA7Mhl'
-      };
-      var request_data = {
-        url: 'https://api.twitter.com/1.1/search/tweets.json?q='+q,
-        method: 'GET'
-      };
-      
-      $.ajax({
-         url: request_data.url,
-         type: request_data.method,
-         data: request_data.data,
-         headers: oauth.toHeader(oauth.authorize(request_data, token))
-      }).done(function(data) {
-        var dataJSON = JSON.parse(data);
-        document.getElementById('aaa').innerHTML = ''+dataJSON;//+xob
-         //process your data here
-      });
       // var xobj = new XMLHttpRequest();
       // var url =
       // var url = "https://tenaciousj.github.io/sampleTwitterEndpoint/tweets.json";//?" + "geocode=" + lat +"," + longi + "," + "50mi";
@@ -524,7 +495,17 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //   console.log("Tweet object for " + tweetObj[username] + " successfully created!");
       // });
 
-    };
+    // };
+      $.ajax({
+        url: "https://fast-headland-78383.herokuapp.com/search/tweets",
+        type: "GET"
+      }).done(function(data) {
+        //process your data here
+        dataJSON = JSON.parse(data);
+       document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON;
+      });
+
+    }
 
     function initializeMap(userLat, userLong) {
       // debugger;
@@ -642,13 +623,3 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
           // var infowindow = new google.maps.InfoWindow();
 
-
-          // var tweetContent = tweets[t]["username"] + " said:<br>" + "'"+ tweets[t]["content"] + "'";
-
-          // google.maps.event.addListener(location,'click', (function(location,content,infowindow,latLongPair){
-          //     return function() {
-          //         infowindow.setContent(content);
-          //         infowindow.setPosition(latLongPair);
-          //         infowindow.open(map);
-          //     };
-          // })(location,tweetContent,infowindow, latLongPair));
