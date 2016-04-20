@@ -20,12 +20,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     //uses Twitter API call to search for a place that the user has searched
     function getTweetsFromLocation(q){
        $.ajax({
-        url: "https://fast-headland-78383.herokuapp.com/search/tweets",
+        url: "https://fast-headland-78383.herokuapp.com/search/tweets?q="+q,
         type: "GET"
       }).done(function(data) {
         //process your data here
         dataJSON = JSON.parse(data);
-       document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON.statuses;
+       // document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON.statuses;
        console.info(dataJSON);
        moveDataToDatabase(dataJSON);
       });
@@ -53,6 +53,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           });
 
         }
+      }
         
     function initializeMap(userLat, userLong) {
       // debugger;
@@ -61,15 +62,35 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         "neg": "red",
         "neutral": "gray",
       };
-	  
-	  var input = document.getElementById("pac-input");
-	  var searchBox = new google.maps.places.SearchBox(input);
-	  
-	  searchBox.addListener('places_changed'.function(){
-		  var places = searchBox.getPlaces();
-		  
-		  console.info(places);
-	  });
+      var userLoc = new google.maps.LatLng(userLat,userLong);
+      var LgdIcon = document.getElementById('LegendIcon');
+  	  var mapProp = {
+           center:userLoc,
+           zoom:12,
+           panControl:true,
+           zoomControl:true,
+           mapTypeControl:true,
+           scaleControl:true,
+           streetViewControl:true,
+           overviewMapControl:true,
+           rotateControl:true,
+           mapTypeId:google.maps.MapTypeId.ROADMAP
+         };
+
+       var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+       map.controls[google.maps.ControlPosition.RIGHT_TOP].push(LgdIcon);
+    	  var input = document.getElementById("pac-input");
+    	  var searchBox = new google.maps.places.SearchBox(input);
+    	  
+    	  searchBox.addListener('places_changed', function(){
+    		  var places = searchBox.getPlaces();
+          var name = places[0].name;
+          places = JSON.stringify(name);
+          getTweetsFromLocation(name);
+    		  document.getElementById("aaa").innerHTML = places + "";
+    		  console.info("places:" + places);
+    	  });
+
 	  
    }
  });
