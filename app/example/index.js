@@ -347,6 +347,15 @@ OAuth.prototype.sortObject = function(data) {
 
 
 
+
+
+
+
+
+
+
+
+
     google.maps.event.addDomListener(window, 'load', getUserLocation);
 
     $scope.geoVibesTitle = "GeoVibes";
@@ -384,8 +393,9 @@ OAuth.prototype.sortObject = function(data) {
         data: oauth.authorize(request_data, token)
       }).done(function(data) {
         //process your data here
-        dataJSON = JSON.parse(data);
-        getTweetContentSentiment(dataJSON);
+        var dataJSON = JSON.parse(data);
+        document.getElementById('aaa').innerHTML = ''+dataJSON;//+xobj.responseText;
+
       });
       // var xobj = new XMLHttpRequest();
       // var url =
@@ -411,155 +421,45 @@ OAuth.prototype.sortObject = function(data) {
     // };
 
 
-    function makeSentimentAPICall(statuses){
-      return new Promise(function (resolve, reject){
-        // var userName = statuses[s]["user"]["name"];
-        // var tweetContent = statuses[s]["text"];
-        var sentiment;
-        //get sentiment of tweet
-        var xobj = new XMLHttpRequest();
-        var url = "http://text-processing.com/api/sentiment/";
-        xobj.onreadystatechange = function() {
-          if (xobj.readyState == 4 && xobj.status == 200) {
-            // var json = JSON.parse(xobj.responseText);
-            // sentiment = json["label"];
-            resolve(xobj.response);
-          }
-          else{
-            // sentiment = "didn't work";
-            reject(Error(xobj.statusText));
-          }
-        };
-        xobj.open("POST", url, true);
-        xobj.send("text=" + tweetContent);
+    // function moveDataToDatabase(result){
 
-        // tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
-      });
-    };
+    //   if(r%2 == 0)
+    //     {
+    //       lat =  42.052844 + 0.02 *Math.random();
+    //       longi = -87.678484 - 0.02 *Math.random();
+    //     }
+    //     else
+    //     {
+    //       lat =  42.052844 - 0.02 *Math.random();
+    //       longi = -87.678484 - 0.02 *Math.random();
+    //     }
+    //     var temp = Math.random();
 
-    function getTweetContentSentiment(json){
-      var statuses = json["statuses"];
-      var prevPromise = Promise.resolve();
+    //     if (temp  < 0.4)
+    //       var3 = "neutral";
+    //     else if(temp > 0.6)
+    //       var3 = "pos";
+    //     else
+    //       var3 = "neg";
 
-      //database cleaning
-      var Tweet = supersonic.data.model('Tweet');
-      Tweet.findAll().then(function(tweets)
-      {
-        for(var i = 0; i < tweets.length; i++)
-        {
-          tweets[i].delete().then(function(){
-            console.log("delete" + i);
-          });
-        }
+    //     var curr = result["tweets"][r];
+    //     // var var3 = trySentiment(curr["tweet_content"]);
+    //     var tweetObj = {
+    //       city: "Evanston",
+    //       content: curr["tweet_content"],
+    //       latitude: lat,
+    //       longitude: longi,
+    //       // sentiment: curr["sentiment"],
 
-      });
-
-
-      statuses.forEach(function(s){
-        prevPromise = prevPromise.then(function(){
-          return makeSentimentAPICall(s);
-        }).then(function(data){
-          var sentiment = JSON.parse(data)["label"];
-          var userName = s["user"]["name"];
-          var tweetContent = s["text"];
-
-          var result = {"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment};
-          moveDataToDatabase(result);
-
-        }).catch(function(error){
-          console.log("getTweetContentSentiment doesn't work");
-        });
-      });
-
-      // for(var s = 0; s < statuses.length; s++){
-        // var userName = statuses[s]["user"]["name"];
-        // var tweetContent = statuses[s]["text"];
-        // var sentiment;
-
-        // //get sentiment of tweet
-        // var xobj = new XMLHttpRequest();
-        // var url = "http://text-processing.com/api/sentiment/";
-        // xobj.onreadystatechange = function() {
-        //   if (xobj.readyState == 4 && xobj.status == 200) {
-        //     var json = JSON.parse(xobj.responseText);
-        //     sentiment = json["label"];
-        //   }
-        //   else{
-        //     sentiment = "neutral";
-        //   }
-        // };
-        // xobj.open("POST", url, true);
-        // xobj.send("text=" + tweetContent);
-        // document.getElementById('aaa').innerHTML = "state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText;
-        // tweets.push({"user_name": userName, "tweet_content": tweetContent, "sentiment": sentiment});
-      // }
-
-
-
-    };
-    var trySentiment = new Promise(function(tweetContent){
-      // debugger;
-      var xobj = new XMLHttpRequest();
-      var sentiment;
-        var url = "http://text-processing.com/api/sentiment/";
-        xobj.onreadystatechange = function() {
-          document.getElementById('aaa').innerHTML = 'here: '+ xobj.status;
-          console.info("state:" + xobj.readyState + " status: " + xobj.status + "\ncontent:" + xobj.responseText);
-          if (xobj.readyState == 4 && xobj.status == 200) {
-            var json = JSON.parse(xobj.responseText);
-            sentiment = json["label"];
-            resolve("stuff worked");
-          }
-          else{
-            sentiment = "neutral";
-            reject(Error("it broke"));
-          }
-        };
-        xobj.open("POST", url, true);
-        xobj.send("text=" + tweetContent);
-
-        return sentiment;
-    });
-
-    function moveDataToDatabase(result){
-
-      if(r%2 == 0)
-        {
-          lat =  42.052844 + 0.02 *Math.random();
-          longi = -87.678484 - 0.02 *Math.random();
-        }
-        else
-        {
-          lat =  42.052844 - 0.02 *Math.random();
-          longi = -87.678484 - 0.02 *Math.random();
-        }
-        var temp = Math.random();
-
-        if (temp  < 0.4)
-          var3 = "neutral";
-        else if(temp > 0.6)
-          var3 = "pos";
-        else
-          var3 = "neg";
-
-        var curr = result["tweets"][r];
-        // var var3 = trySentiment(curr["tweet_content"]);
-        var tweetObj = {
-          city: "Evanston",
-          content: curr["tweet_content"],
-          latitude: lat,
-          longitude: longi,
-          // sentiment: curr["sentiment"],
-
-          sentiment: var3,
-          state: "IL",
-          username: curr["user_name"],
-        };
-        var Tweet = supersonic.data.model('Tweet');
-        var finalTweet = new Tweet(tweetObj);
-        finalTweet.save().then(function(){
-          console.log("Tweet object for " + tweetObj[username] + " successfully created!");
-        });
+    //       sentiment: var3,
+    //       state: "IL",
+    //       username: curr["user_name"],
+    //     };
+    //     var Tweet = supersonic.data.model('Tweet');
+    //     var finalTweet = new Tweet(tweetObj);
+    //     finalTweet.save().then(function(){
+    //       console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+    //     });
 
       // for(var r = 0; r < result["tweets"].length; r++){
       //   if(r%2 == 0)
