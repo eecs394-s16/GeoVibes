@@ -368,6 +368,17 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     //uses Twitter API call to search for a place that the user has searched
     function getTweetsFromLocation(q){
+       $.ajax({
+        url: "https://fast-headland-78383.herokuapp.com/search/tweets",
+        type: "GET"
+      }).done(function(data) {
+        //process your data here
+        dataJSON = JSON.parse(data);
+       document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON.statuses;
+       console.info(dataJSON);
+      });
+
+    }
 
       // var xobj = new XMLHttpRequest();
       // var url =
@@ -393,45 +404,46 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     // };
 
 
-    // function moveDataToDatabase(result){
+    function moveDataToDatabase(result){
 
-    //   if(r%2 == 0)
-    //     {
-    //       lat =  42.052844 + 0.02 *Math.random();
-    //       longi = -87.678484 - 0.02 *Math.random();
-    //     }
-    //     else
-    //     {
-    //       lat =  42.052844 - 0.02 *Math.random();
-    //       longi = -87.678484 - 0.02 *Math.random();
-    //     }
-    //     var temp = Math.random();
 
-    //     if (temp  < 0.4)
-    //       var3 = "neutral";
-    //     else if(temp > 0.6)
-    //       var3 = "pos";
-    //     else
-    //       var3 = "neg";
+      // if(r%2 == 0)
+      //   {
+      //     lat =  42.052844 + 0.02 *Math.random();
+      //     longi = -87.678484 - 0.02 *Math.random();
+      //   }
+      //   else
+      //   {
+      //     lat =  42.052844 - 0.02 *Math.random();
+      //     longi = -87.678484 - 0.02 *Math.random();
+      //   }
+      //   var temp = Math.random();
 
-    //     var curr = result["tweets"][r];
-    //     // var var3 = trySentiment(curr["tweet_content"]);
-    //     var tweetObj = {
-    //       city: "Evanston",
-    //       content: curr["tweet_content"],
-    //       latitude: lat,
-    //       longitude: longi,
-    //       // sentiment: curr["sentiment"],
+      //   if (temp  < 0.4)
+      //     var3 = "neutral";
+      //   else if(temp > 0.6)
+      //     var3 = "pos";
+      //   else
+      //     var3 = "neg";
 
-    //       sentiment: var3,
-    //       state: "IL",
-    //       username: curr["user_name"],
-    //     };
-    //     var Tweet = supersonic.data.model('Tweet');
-    //     var finalTweet = new Tweet(tweetObj);
-    //     finalTweet.save().then(function(){
-    //       console.log("Tweet object for " + tweetObj[username] + " successfully created!");
-    //     });
+      //   var curr = result["tweets"][r];
+      //   // var var3 = trySentiment(curr["tweet_content"]);
+      //   var tweetObj = {
+      //     city: "Evanston",
+      //     content: curr["tweet_content"],
+      //     latitude: lat,
+      //     longitude: longi,
+      //     // sentiment: curr["sentiment"],
+
+      //     sentiment: var3,
+      //     state: "IL",
+      //     username: curr["user_name"],
+      //   };
+      //   var Tweet = supersonic.data.model('Tweet');
+      //   var finalTweet = new Tweet(tweetObj);
+      //   finalTweet.save().then(function(){
+      //     console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+      //   });
 
       // for(var r = 0; r < result["tweets"].length; r++){
       //   if(r%2 == 0)
@@ -472,40 +484,33 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //     console.log("Tweet object for " + tweetObj[username] + " successfully created!");
       //   });
       // }
+    }
 
 
 
 
-      // var Tweet = supersonic.data.model('Tweet');
-      // var var1 = 42.052090 + 0.01 ;//* Math.random();
-      // var var2 =  -87.666190 + 0.01;// *Math.random();
-      // var tweetObj = {
-      //   city: "Evanston",
-      //   content: "hello",
-      //   latitude: var1,// 42.052090 ,
-      //   longitude: var2,// -87.666190 ,
-      //   sentiment: "pos",
-      //   // sentiment: "negative",
-      //   state: "IL",
-      //   username: "user1",
-      // };
+    //   var Tweet = supersonic.data.model('Tweet');
+    //   var var1 = 42.052090 + 0.01 ;//* Math.random();
+    //   var var2 =  -87.666190 + 0.01;// *Math.random();
+    //   var tweetObj = {
+    //     city: "Evanston",
+    //     content: "hello",
+    //     latitude: var1,// 42.052090 ,
+    //     longitude: var2,// -87.666190 ,
+    //     sentiment: "pos",
+    //     // sentiment: "negative",
+    //     state: "IL",
+    //     username: "user1",
+    //   };
 
-      // var finalTweet = new Tweet(tweetObj);
-      // finalTweet.save().then(function(){
-      //   console.log("Tweet object for " + tweetObj[username] + " successfully created!");
-      // });
+    //   var finalTweet = new Tweet(tweetObj);
+    //   finalTweet.save().then(function(){
+    //     console.log("Tweet object for " + tweetObj[username] + " successfully created!");
+    //   });
 
     // };
-      $.ajax({
-        url: "https://fast-headland-78383.herokuapp.com/search/tweets",
-        type: "GET"
-      }).done(function(data) {
-        //process your data here
-        dataJSON = JSON.parse(data);
-       document.getElementById('aaa').innerHTML = 'tweets: '+dataJSON;
-      });
-
-    }
+      
+    
 
     function initializeMap(userLat, userLong) {
       // debugger;
