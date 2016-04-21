@@ -41,44 +41,37 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     }
 
     function analyzeTweets(tweets) {
-        for(var i = 0; i < tweets.statuses.length; i++)
-        {
-        $.ajax({
-        type: "POST",
-        url: "http://text-processing.com/api/sentiment/",
-        data: "text="+String(tweets.statuses[i].text)
-      }).done(function(data) {
-        console.log(data["probability"]["pos"]);
-        var Tweet = supersonic.data.model('Tweet');
-            console.log(tweets);
-          var tweetObj = {
-            content : tweets.statuses[i].text,
-            positivity_rating : data["probability"]["pos"],
-            username : tweets.statuses[i].user.name
-          }
-          var finalTweet = new Tweet(tweetObj);
-          finalTweet.save().then(function(){
-            console.info("insert the data: " + tweetObj.text);
+      for(var i = 0; i < tweets.statuses.length; i++) {
+        (function(tweetContent, tweetingUser){
+          $.ajax({
+            type: "POST",
+            url: "http://text-processing.com/api/sentiment/",
+            data: "text="+tweetContent
+          }).done(function(data) {
+
+            //MOVE TO DATABASE
+            var Tweet = supersonic.data.model('Tweet');
+            document.getElementById("aaa").innerHTML = tweetContent;
+
+            var tweetObj = {
+              content : tweetContent,
+              positivity_rating : data["probability"]["pos"],
+              username : tweetingUser
+            }
+
+            var finalTweet = new Tweet(tweetObj);
+            finalTweet.save().then(function(){
+              console.info("insert the data: " + tweetObj.text);
+            });
+
+            
           });
-      });
-        }
+
+        })(tweets.statuses[i].text, tweets.statuses[i].user.name);
+
+      }
     }
 
-
-//    function moveDataToDatabase(tweet, sentiment){
-//        console.log(tweet)
-//        var Tweet = supersonic.data.model('Tweet');
-//          var tweetObj = {
-//            content : tweet.text,
-//            positivity_rating : sentiment,
-//            username : result.statuses[i].user.name
-//          }
-//          var finalTweet = new Tweet(tweetObj);
-//          finalTweet.save().then(function(){
-//            console.info("insert the data: " + tweetObj.text);
-//          });
-//
-//        }
         
     function initializeMap(userLat, userLong) {
       // debugger;
