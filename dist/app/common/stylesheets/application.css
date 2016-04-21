@@ -24,3 +24,14 @@ hr {
     margin-left:-10px;
     margin-right:-10px;
 }
+
+#aaa {
+    font-size: 30px;
+}
+
+#rating {
+    background-color: white;
+    padding:10px;
+    margin: 10px;
+    border-radius:10px;
+}

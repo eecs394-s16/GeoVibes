@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -25,6 +32,13 @@
 <body ng-app="example">
 
 <head>
+  <script>
+  window.addEventListener('WebComponentsReady', function() {
+    supersonic.app.splashscreen.hide();
+  });
+  </script>
+  <!-- Cloud resource definition file for Supersonic Data -->
+  <script src="/cloud-resources.js"></script>
 	<div class="padding">
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL-erbd04QacEbEY7ZXJ9F0tsC8dMQfOc&libraries=places"></script>
@@ -62,10 +76,11 @@
     <h3 style="color:cadetblue;"><strong>Where are the good vibes?</strong></h3>
     <h5>Search a location to check out what the vibe is.</h5>
 <hr>
-	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:80%;"></center>
-	<center><div id="googleMap" style="width:80%;"></div></center>
+	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:100%;"></center>
+	<center><div id="googleMap" style="width:100%;"></div></center>
     <br>
 
+<!--
 
     <div id="LegendIcon">
   		<h4>Legend</h4>
@@ -73,10 +88,11 @@
     	<p><div style="width: 10px; height: 10px; background-color:red"></div>Bad Vibes</p>
     	<p><div style="width: 10px; height: 10px; background-color:gray"></div>Meh Vibes</p>
 	</div>
+-->
 
-
-	<div ng-bind="json_test" id="aaa"></div>
-
+<div id="rating">
+	<h3 style="color:cadetblue;">Positivity Rating:</h3><div ng-bind="json_test" id="aaa"></div>
+</div>
 	</div>
 
 </body>

@@ -36,10 +36,11 @@
     <h3 style="color:cadetblue;"><strong>Where are the good vibes?</strong></h3>
     <h5>Search a location to check out what the vibe is.</h5>
 <hr>
-	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:80%;"></center>
-	<center><div id="googleMap" style="width:80%;"></div></center>
+	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:100%;"></center>
+	<center><div id="googleMap" style="width:100%;"></div></center>
     <br>
 
+<!--
 
     <div id="LegendIcon">
   		<h4>Legend</h4>
@@ -47,10 +48,11 @@
     	<p><div style="width: 10px; height: 10px; background-color:red"></div>Bad Vibes</p>
     	<p><div style="width: 10px; height: 10px; background-color:gray"></div>Meh Vibes</p>
 	</div>
+-->
 
-
-	<div ng-bind="json_test" id="aaa"></div>
-
+<div id="rating">
+	<h3 style="color:cadetblue;">Positivity Rating:</h3><div ng-bind="json_test" id="aaa"></div>
+</div>
 	</div>
 
 </body>

@@ -27,7 +27,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         var tweets = JSON.parse(data);
         console.info(tweets);
         var tweetsString = JSON.stringify(tweets);
-        // document.getElementById("aaa").innerHTML = tweetsString;
         var Tweet = supersonic.data.model('Tweet');
         Tweet.findAll().then(function(allTweets){
           for(var i = 0; i < allTweets.length; i++)
@@ -40,7 +39,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
     }
 
+
     function analyzeTweets(tweets) {
+        var sum = 0;
+        var numTweets = tweets.statuses.length;
       for(var i = 0; i < tweets.statuses.length; i++) {
         (function(tweetContent, tweetingUser){
           $.ajax({
@@ -51,14 +53,13 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
             //MOVE TO DATABASE
             var Tweet = supersonic.data.model('Tweet');
-            document.getElementById("aaa").innerHTML = tweetContent;
-
             var tweetObj = {
               content : tweetContent,
               positivity_rating : data["probability"]["pos"],
               username : tweetingUser
             }
-
+            sum = sum + data["probability"]["pos"];
+            document.getElementById("aaa").innerHTML = String(((sum / numTweets) * 100).toFixed(2)) + "%";
             var finalTweet = new Tweet(tweetObj);
             finalTweet.save().then(function(){
               console.info("insert the data: " + tweetObj.text);
@@ -81,7 +82,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         "neutral": "gray",
       };
       var userLoc = new google.maps.LatLng(userLat,userLong);
-      var LgdIcon = document.getElementById('LegendIcon');
+      var rating = document.getElementById('rating');
   	  var mapProp = {
            center:userLoc,
            zoom:12,
@@ -96,7 +97,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
          };
 
        var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-       map.controls[google.maps.ControlPosition.RIGHT_TOP].push(LgdIcon);
+       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(rating);
     	  var input = document.getElementById("pac-input");
     	  var searchBox = new google.maps.places.SearchBox(input);
     	  
