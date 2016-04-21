@@ -16,6 +16,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         initializeMap(position.coords.latitude, position.coords.longitude);
       });
     };
+    
 
     //uses Twitter API call to search for a place that the user has searched
     function getTweetsFromLocation(q){
@@ -34,33 +35,50 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
             allTweets[i].delete();
           }
         });
-        moveDataToDatabase(tweets);
+           analyzeTweets(tweets);
       });
 
     }
 
-
-    function moveDataToDatabase(result){
-        var Tweet = supersonic.data.model('Tweet');
-        for(var i = 0; i < result.statuses.length; i++)
+    function analyzeTweets(tweets) {
+        for(var i = 0; i < tweets.statuses.length; i++)
         {
+        $.ajax({
+        type: "POST",
+        url: "http://text-processing.com/api/sentiment/",
+        data: "text="+String(tweets.statuses[i].text)
+      }).done(function(data) {
+        console.log(data["probability"]["pos"]);
+        var Tweet = supersonic.data.model('Tweet');
+            console.log(tweets);
           var tweetObj = {
-            city : "N/A",
-            content : result.statuses[i].text,
-            id : "",
-            latitude : "N/A",
-            longitude : "N/A",
-            sentiment : "N/A",
-            state : "N/A",
-            username : result.statuses[i].user.name
+            content : tweets.statuses[i].text,
+            positivity_rating : data["probability"]["pos"],
+            username : tweets.statuses[i].user.name
           }
           var finalTweet = new Tweet(tweetObj);
           finalTweet.save().then(function(){
             console.info("insert the data: " + tweetObj.text);
           });
-
+      });
         }
-      }
+    }
+
+
+//    function moveDataToDatabase(tweet, sentiment){
+//        console.log(tweet)
+//        var Tweet = supersonic.data.model('Tweet');
+//          var tweetObj = {
+//            content : tweet.text,
+//            positivity_rating : sentiment,
+//            username : result.statuses[i].user.name
+//          }
+//          var finalTweet = new Tweet(tweetObj);
+//          finalTweet.save().then(function(){
+//            console.info("insert the data: " + tweetObj.text);
+//          });
+//
+//        }
         
     function initializeMap(userLat, userLong) {
       // debugger;

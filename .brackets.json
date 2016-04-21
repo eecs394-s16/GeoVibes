@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/rosaliechan/GitHub/team-red-test/dist/components/webcomponentsjs/webcomponents.min.js",
+        "/Users/rosaliechan/GitHub/team-red-test/Gruntfile.js"
+    ]
+}
