@@ -29,19 +29,10 @@ angular
 
   });
 
-//angular
-//  .module('tweet')
+
 var Index = angular.module('tweet',['supersonic']);
 Index.controller("IndexController", function ($scope, supersonic) {
-//    $scope.tweets = ["hi"];
-//    debugger;
-//    $scope.showSpinner = true;
 
-//    Tweet.all().whenChanged( function (tweets) {
-//        $scope.$apply( function () {
-//          $scope.tweets = tweets;
-//          $scope.showSpinner = false;
-//        });
     var test;
     var Tweet = supersonic.data.model("Tweet");
     Tweet.findAll().then(function(allTweets){
