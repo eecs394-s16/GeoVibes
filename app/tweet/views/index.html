@@ -1,31 +1,43 @@
 <div ng-controller="IndexController">
   <super-navbar>
     <super-navbar-title>
-      Tweet Index
+      Tweets
     </super-navbar-title>
   </super-navbar>
-
-  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+    <div id="aaaa"> </div>
+<option ng-repeat="t in tweets">{{t}}</option>
+<!--
+  <div ng-show="showSpinner" ng-include="'_spinner.html'">
+    </div>
   <div ng-hide="showSpinner">
+-->
+      
+<!--
     <ul class="list" ng-hide="tweets.length == 0">
 
-      <super-navigate location="tweet#show" data-params-id="{{ tweet.id }}" ng-repeat="tweet in tweets">
+      <super-navigate location="tweet#show" data-params-id="{{ tweet.content }}" ng-repeat="tweet in tweets">
+          
         <li class="item item-icon-right">
-          <span ng-bind="tweet['latitude']"></span>
+          <span ng-bind="tweet"></span>
           <i class="icon super-ios-arrow-right"></i>
         </li>
       </super-navigate>
 
     </ul>
+-->
 
+<!--
     <h4 ng-show="tweets.length == 0" class="assertive padding">
       No tweets found. Create one?
     </h4>
+-->
 
+<!--
     <super-modal-show location="tweet#new">
       <button class="button button-full button-positive">
         Create a new tweet
       </button>
     </super-modal-show>
-  </div>
+-->
+<!--  </div>-->
 </div>

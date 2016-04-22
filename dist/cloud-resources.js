@@ -5,8 +5,8 @@ window.ag.data = {
   "options": {
     "baseUrl": "https://rest-api.appgyver.com/v2",
     "headers": {
-      "steroidsApiKey": "9f38eb9dc56f7c1ef619e46a864173d0c6d658f00dee8f701091b42aae917a96",
-      "steroidsAppId": 116188
+      "steroidsApiKey": "f1b1b704fbd2e55fd43d861ae3189d3a1acc1faa55c9b04c268c5e203d022b7d",
+      "steroidsAppId": 116303
     }
   },
   "resources": {
