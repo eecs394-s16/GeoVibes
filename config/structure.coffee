@@ -21,7 +21,7 @@ module.exports =
 #    }
     {
       title: "Tweet"
-      id: "tweets"
+      id: "tweet"
       location: "tweet#index" 
     }
 

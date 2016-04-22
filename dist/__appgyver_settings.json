@@ -8,7 +8,7 @@
     },
     {
       "position": 1,
-      "id": "tweets",
+      "id": "tweet",
       "title": "Tweet",
       "target_url": "http://localhost/app/tweet/index.html"
     }
