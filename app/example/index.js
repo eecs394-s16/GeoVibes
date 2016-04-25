@@ -9,7 +9,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   google.maps.event.addDomListener(window, 'load', getUserLocation);
 
-  $scope.geoVibesTitle = "GeoVibes";
+  // $scope.geoVibesTitle = "GeoVibes";
+  $scope.geoVibesTitle = "";
 
   function getUserLocation(){
     supersonic.device.geolocation.getPosition().then( function(position) {
@@ -24,17 +25,17 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
               // debugger;
               // if(allTweets[i]["requestId"] == message.ipAddress){
                 allTweets[i].delete();
-              // }   
+              // }
             }
             getTweetsFromLocation(query, message.ipAddress);
             initializeMap(position.coords.latitude, position.coords.longitude);
           });
-          
+
         }
       });
-      
 
-      
+
+
     });
   };
 
@@ -48,9 +49,9 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       var tweets = JSON.parse(data);
       console.info(tweets);
       var tweetsString = JSON.stringify(tweets);
-      
+
       analyzeTweets(tweets, id);
-      
+
     });
 
   }
@@ -152,7 +153,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
               // debugger;
               if(allTweets[i]["requestId"] == message.ipAddress){
                 allTweets[i].delete();
-              }   
+              }
             }
             getTweetsFromLocation(name, message.ipAddress);
             // initializeMap(position.coords.latitude, position.coords.longitude);
