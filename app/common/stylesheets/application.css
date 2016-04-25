@@ -11,8 +11,8 @@ hr {
 #LegendIcon {
     background-color:white;
     padding:5px;
-    width:80px; 
-    border:cadetblue solid 2px; 
+    width:80px;
+    border:cadetblue solid 2px;
     margin:2px;
 }
 
@@ -20,7 +20,8 @@ hr {
     width:100%;
     top:0px;
     left:0px;
-	height: 555px;
+    /*height: 555px;*/
+	height: 100%;
 }
 
 #aaa {
@@ -71,4 +72,8 @@ top: 4.25%;
     z-index:100;
 }
 
-
+#logo {
+  position: absolute;
+  top: 5%;
+  left: 40%;
+}
