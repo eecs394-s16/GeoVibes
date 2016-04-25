@@ -3,6 +3,8 @@ var GeoVibesApp = angular.module('example', [
   'supersonic'
 ]);
 
+
+
 GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   google.maps.event.addDomListener(window, 'load', getUserLocation);
@@ -12,14 +14,21 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
   function getUserLocation(){
     supersonic.device.geolocation.getPosition().then( function(position) {
       var query = "evanston";
-      getTweetsFromLocation(query);
+
+      steroids.device.getIPAddress({}, {
+        onSuccess: function(message) {
+          getTweetsFromLocation(query, message.ipAddress);
+        }
+      });
+      
+
       initializeMap(position.coords.latitude, position.coords.longitude);
     });
   };
 
 
   //uses Twitter API call to search for a place that the user has searched
-  function getTweetsFromLocation(q){
+  function getTweetsFromLocation(q, id){
     $.ajax({
       url: "https://fast-headland-78383.herokuapp.com/search/tweets?q="+q,
       type: "GET"
@@ -28,19 +37,19 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       console.info(tweets);
       var tweetsString = JSON.stringify(tweets);
       var Tweet = supersonic.data.model('Tweet');
-      Tweet.findAll().then(function(allTweets){
-        for(var i = 0; i < allTweets.length; i++)
-        {
-          allTweets[i].delete();
-        }
-      });
-      analyzeTweets(tweets);
+      // Tweet.findAll().then(function(allTweets){
+      //   for(var i = 0; i < allTweets.length; i++)
+      //   {
+      //     allTweets[i].delete();
+      //   }
+      // });
+      analyzeTweets(tweets, id);
     });
 
   }
 
 
-  function analyzeTweets(tweets) {
+  function analyzeTweets(tweets, id) {
     var sum = 0;
     var numTweets = tweets.statuses.length;
     for(var i = 0; i < tweets.statuses.length; i++) {
@@ -57,9 +66,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
             content : tweetContent,
             positivity_rating : data["probability"]["pos"],
             username : tweetingUser
+            requestId : id
           }
           sum = sum + data["probability"]["pos"];
-          document.getElementById("aaa").innerHTML = String(((sum / numTweets) * 100).toFixed(2)) + "%";
+          document.getElementById("aaa").innerHTML = ((sum / numTweets)) * 100 + "%";
           var finalTweet = new Tweet(tweetObj);
           finalTweet.save().then(function(){
             console.info("insert the data: " + tweetObj.text);
@@ -101,12 +111,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     var input = document.getElementById("pac-input");
     var searchBox = new google.maps.places.SearchBox(input);
 
-    //    	  searchBox.addListener('places_changed', function(){
-    //    		  var places = searchBox.getPlaces();
-    //          var name = places[0].name;
-    //          getTweetsFromLocation(name);
-    //    	  });
-    //
+
     map.addListener('bounds_changed', function() {
       searchBox.setBounds(map.getBounds());
     });
@@ -128,7 +133,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       markers = [];
 
       var name = places[0].name;
-      getTweetsFromLocation(name);
+
+      steroids.device.getIPAddress({}, {
+        onSuccess: function(message) {
+          getTweetsFromLocation(query, message.ipAddress);
+        }
+      });
 
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();
