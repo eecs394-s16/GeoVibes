@@ -9,6 +9,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   $scope.geoVibesTitle = "GeoVibes";
 
+  var markers = [];
+
   function getUserLocation(){
     supersonic.device.geolocation.getPosition().then( function(position) {
       var query = "evanston";
@@ -88,7 +90,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     }
   }
 
-
   function initializeMap(userLat, userLong) {
     // debugger;
     var legend = {
@@ -121,8 +122,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     map.addListener('bounds_changed', function() {
       searchBox.setBounds(map.getBounds());
     });
-
-    var markers = [];
 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
