@@ -22,9 +22,9 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
             for(var i = 0; i < allTweets.length; i++)
             {
               // debugger;
-              if(allTweets[i]["requestId"] == message.ipAddress){
+              // if(allTweets[i]["requestId"] == message.ipAddress){
                 allTweets[i].delete();
-              }   
+              // }   
             }
             getTweetsFromLocation(query, message.ipAddress);
             initializeMap(position.coords.latitude, position.coords.longitude);
@@ -145,7 +145,19 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       steroids.device.getIPAddress({}, {
         onSuccess: function(message) {
           debugger;
-          getTweetsFromLocation(query, message.ipAddress);
+          var Tweet = supersonic.data.model('Tweet');
+          Tweet.findAll().then(function(allTweets){
+            for(var i = 0; i < allTweets.length; i++)
+            {
+              // debugger;
+              if(allTweets[i]["requestId"] == message.ipAddress){
+                allTweets[i].delete();
+              }   
+            }
+            getTweetsFromLocation(name, message.ipAddress);
+            // initializeMap(position.coords.latitude, position.coords.longitude);
+          });
+          // getTweetsFromLocation(query, message.ipAddress);
         }
       });
 
