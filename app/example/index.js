@@ -90,8 +90,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       zoomControl:true,
       mapTypeControl:true,
       scaleControl:true,
-      streetViewControl:true,
-      overviewMapControl:true,
+      // streetViewControl:true,
+      // overviewMapControl:true,
       rotateControl:true,
       mapTypeId:google.maps.MapTypeId.ROADMAP
     };
