@@ -132,14 +132,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();
+
       places.forEach(function(place) {
-        var icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
-        };
+        var icon = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map
+        });
 
         // Create a marker for each place.
         markers.push(new google.maps.Marker({
