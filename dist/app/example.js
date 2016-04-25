@@ -17,12 +17,24 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
       steroids.device.getIPAddress({}, {
         onSuccess: function(message) {
-          getTweetsFromLocation(query, message.ipAddress);
+          var Tweet = supersonic.data.model('Tweet');
+          Tweet.findAll().then(function(allTweets){
+            for(var i = 0; i < allTweets.length; i++)
+            {
+              // debugger;
+              // if(allTweets[i]["requestId"] == message.ipAddress){
+                allTweets[i].delete();
+              // }   
+            }
+            getTweetsFromLocation(query, message.ipAddress);
+            initializeMap(position.coords.latitude, position.coords.longitude);
+          });
+          
         }
       });
       
 
-      initializeMap(position.coords.latitude, position.coords.longitude);
+      
     });
   };
 
@@ -36,13 +48,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       var tweets = JSON.parse(data);
       console.info(tweets);
       var tweetsString = JSON.stringify(tweets);
-      var Tweet = supersonic.data.model('Tweet');
-      // Tweet.findAll().then(function(allTweets){
-      //   for(var i = 0; i < allTweets.length; i++)
-      //   {
-      //     allTweets[i].delete();
-      //   }
-      // });
+      
       analyzeTweets(tweets, id);
     });
 
@@ -69,7 +75,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
             requestId : id
           }
           sum = sum + data["probability"]["pos"];
-          document.getElementById("aaa").innerHTML = ((sum / numTweets)) * 100 + "%";
+
+          document.getElementById("aaa").innerHTML = ((sum / numTweets) * 100).toFixed(1) + "%";
           var finalTweet = new Tweet(tweetObj);
           finalTweet.save().then(function(){
             console.info("insert the data: " + tweetObj.text);
@@ -137,7 +144,20 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
       steroids.device.getIPAddress({}, {
         onSuccess: function(message) {
-          getTweetsFromLocation(query, message.ipAddress);
+          debugger;
+          var Tweet = supersonic.data.model('Tweet');
+          Tweet.findAll().then(function(allTweets){
+            for(var i = 0; i < allTweets.length; i++)
+            {
+              // debugger;
+              if(allTweets[i]["requestId"] == message.ipAddress){
+                allTweets[i].delete();
+              }   
+            }
+            getTweetsFromLocation(name, message.ipAddress);
+            // initializeMap(position.coords.latitude, position.coords.longitude);
+          });
+          // getTweetsFromLocation(query, message.ipAddress);
         }
       });
 
