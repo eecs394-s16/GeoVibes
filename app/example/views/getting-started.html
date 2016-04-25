@@ -19,8 +19,8 @@
   	<script src="/scripts/application.js"></script>
 		<!--jquery-->
 <script>
-   
-$(document).ready(function(){ 
+
+$(document).ready(function(){
     $('#x').hide();
 $('#x').click(
     function(){
@@ -41,8 +41,9 @@ $('#pac-input').on('input',function(){
 	<div ng-controller="HomeController">
 
   	<super-navbar>
-    	<super-navbar-title ng-bind='geoVibesTitle'>
-    	</super-navbar-title>
+    	<!-- <super-navbar-title ng-bind='geoVibesTitle'>
+    	</super-navbar-title> -->
+			<img src="/images/GeoVibes.png">
 	</super-navbar>
 
 	<input id="pac-input" class="controls" type="text" placeholder="Search a location to check out what the vibe is."><i class="fa fa-times" id="x"></i>
