@@ -14,31 +14,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
   function getUserLocation(){
     supersonic.device.geolocation.getPosition().then( function(position) {
       var query = "evanston";
-<<<<<<< HEAD
-      getTweetsFromLocation(query);
-      initializeMap(position.coords.latitude, position.coords.longitude);
-    });
-  };
-
-
-  //uses Twitter API call to search for a place that the user has searched
-  function getTweetsFromLocation(q){
-    $.ajax({
-      url: "https://fast-headland-78383.herokuapp.com/search/tweets?q="+q,
-      type: "GET"
-    }).done(function(data) {
-      var tweets = JSON.parse(data);
-      console.info(tweets);
-      var tweetsString = JSON.stringify(tweets);
-      var Tweet = supersonic.data.model('Tweet');
-      Tweet.findAll().then(function(allTweets){
-        for(var i = 0; i < allTweets.length; i++)
-        {
-          allTweets[i].delete();
-        }
-      });
-      analyzeTweets(tweets);
-=======
 
       steroids.device.getIPAddress({}, {
         onSuccess: function(message) {
@@ -69,17 +44,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       //   }
       // });
       analyzeTweets(tweets, id);
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
     });
 
   }
 
 
-<<<<<<< HEAD
-  function analyzeTweets(tweets) {
-=======
   function analyzeTweets(tweets, id) {
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
     var sum = 0;
     var numTweets = tweets.statuses.length;
     for(var i = 0; i < tweets.statuses.length; i++) {
@@ -95,17 +65,11 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           var tweetObj = {
             content : tweetContent,
             positivity_rating : data["probability"]["pos"],
-            username : tweetingUser
-<<<<<<< HEAD
-          }
-          sum = sum + data["probability"]["pos"];
-          document.getElementById("aaa").innerHTML = String(((sum / numTweets) * 100).toFixed(2)) + "%";
-=======
+            username : tweetingUser,
             requestId : id
           }
           sum = sum + data["probability"]["pos"];
           document.getElementById("aaa").innerHTML = ((sum / numTweets)) * 100 + "%";
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
           var finalTweet = new Tweet(tweetObj);
           finalTweet.save().then(function(){
             console.info("insert the data: " + tweetObj.text);
@@ -113,21 +77,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
 
         });
-<<<<<<< HEAD
-
-      })(tweets.statuses[i].text, tweets.statuses[i].user.name);
-=======
 
       })(tweets.statuses[i].text, tweets.statuses[i].user.name);
 
     }
   }
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
 
-    }
-  }
-
-<<<<<<< HEAD
 
   function initializeMap(userLat, userLong) {
     // debugger;
@@ -157,42 +112,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     var searchBox = new google.maps.places.SearchBox(input);
       map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-    //    	  searchBox.addListener('places_changed', function(){
-    //    		  var places = searchBox.getPlaces();
-    //          var name = places[0].name;
-    //          getTweetsFromLocation(name);
-    //    	  });
-    //
-=======
-  function initializeMap(userLat, userLong) {
-    // debugger;
-    var legend = {
-      "pos": "green",
-      "neg": "red",
-      "neutral": "gray",
-    };
-    var userLoc = new google.maps.LatLng(userLat,userLong);
-    var rating = document.getElementById('rating');
-    var mapProp = {
-      center:userLoc,
-      zoom:12,
-      panControl:true,
-      zoomControl:true,
-      mapTypeControl:true,
-      scaleControl:true,
-      streetViewControl:true,
-      overviewMapControl:true,
-      rotateControl:true,
-      mapTypeId:google.maps.MapTypeId.ROADMAP
-    };
 
-    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(rating);
-    var input = document.getElementById("pac-input");
-    var searchBox = new google.maps.places.SearchBox(input);
-
-
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
     map.addListener('bounds_changed', function() {
       searchBox.setBounds(map.getBounds());
     });
@@ -212,11 +132,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         marker.setMap(null);
       });
       markers = [];
-<<<<<<< HEAD
-
-      var name = places[0].name;
-      getTweetsFromLocation(name);
-=======
 
       var name = places[0].name;
 
@@ -225,7 +140,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           getTweetsFromLocation(query, message.ipAddress);
         }
       });
->>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
 
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();

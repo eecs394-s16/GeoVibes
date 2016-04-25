@@ -8,6 +8,8 @@
   	<link rel="stylesheet" href="/components/supersonic/css/supersonic.css">
   	<link rel="stylesheet" href="../stylesheets/application.css">
   	<link rel="import" href="/components/supersonic/components/import.html">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
 
   	<script src="http://localhost/cordova.js"></script>
   	<script src="/components/steroids-js/steroids.js"></script>
@@ -16,8 +18,20 @@
   	<script src="/components/webcomponentsjs/webcomponents.js"></script>
   	<script src="/scripts/application.js"></script>
 		<!--jquery-->
-		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
-
+<script>
+   
+$(document).ready(function(){ 
+    $('#x').hide();
+$('#x').click(
+    function(){
+    $('#pac-input').val('');
+    $('#x').hide();
+});
+$('#pac-input').on('input',function(){
+        $('#x').show();
+});
+    });
+</script>
 </head>
 
 
@@ -31,7 +45,7 @@
     	</super-navbar-title>
 	</super-navbar>
 
-	<input id="pac-input" class="controls" type="text" placeholder="Search a location to check out what the vibe is.">
+	<input id="pac-input" class="controls" type="text" placeholder="Search a location to check out what the vibe is."><i class="fa fa-times" id="x"></i>
 	<center><div id="googleMap"></div></center>
     <br>
 

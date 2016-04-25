@@ -65,7 +65,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
           var tweetObj = {
             content : tweetContent,
             positivity_rating : data["probability"]["pos"],
-            username : tweetingUser
+            username : tweetingUser,
             requestId : id
           }
           sum = sum + data["probability"]["pos"];
