@@ -1,5 +1,4 @@
 <head>
-	<div class="padding">
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL-erbd04QacEbEY7ZXJ9F0tsC8dMQfOc&libraries=places"></script>
 
@@ -18,7 +17,6 @@
   	<script src="/scripts/application.js"></script>
 		<!--jquery-->
 		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
-  	</div>
 
 </head>
 
@@ -26,29 +24,15 @@
 
 <body ng-app="SteroidsApplication">
 
-	<div class="padding" ng-controller="HomeController">
+	<div ng-controller="HomeController">
 
   	<super-navbar>
     	<super-navbar-title ng-bind='geoVibesTitle'>
     	</super-navbar-title>
 	</super-navbar>
-
-    <h3 style="color:cadetblue;"><strong>Where are the good vibes?</strong></h3>
-    <h5>Search a location to check out what the vibe is.</h5>
-<hr>
-	<center><input id="pac-input" class="controls" type="text" placeholder="Search" style="width:100%;"></center>
-	<center><div id="googleMap" style="width:100%;"></div></center>
+	<input id="pac-input" class="controls" type="text" placeholder="Search a location to check out what the vibe is.">
+	<center><div id="googleMap"></div></center>
     <br>
-
-<!--
-
-    <div id="LegendIcon">
-  		<h4>Legend</h4>
-        <p><div style="width: 10px; height: 10px; background-color:green"></div>Good Vibes</p>
-    	<p><div style="width: 10px; height: 10px; background-color:red"></div>Bad Vibes</p>
-    	<p><div style="width: 10px; height: 10px; background-color:gray"></div>Meh Vibes</p>
-	</div>
--->
 
 <div id="rating">
 	<h3 style="color:cadetblue;">Positivity Rating:</h3><div id="aaa" ng-bind="json_test"></div>

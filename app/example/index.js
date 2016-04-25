@@ -100,6 +100,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(rating);
     var input = document.getElementById("pac-input");
     var searchBox = new google.maps.places.SearchBox(input);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     //    	  searchBox.addListener('places_changed', function(){
     //    		  var places = searchBox.getPlaces();
