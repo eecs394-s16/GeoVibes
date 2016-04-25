@@ -7,8 +7,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   google.maps.event.addDomListener(window, 'load', getUserLocation);
 
-  // $scope.geoVibesTitle = "GeoVibes";
-  $scope.geoVibesTitle = "";
+  $scope.geoVibesTitle = "GeoVibes";
 
   function getUserLocation(){
     supersonic.device.geolocation.getPosition().then( function(position) {
