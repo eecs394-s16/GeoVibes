@@ -3,7 +3,7 @@ var GeoVibesApp = angular.module('example', [
   'supersonic'
 ]);
 
-app.controller('myCtrl', function($scope, $sce) {
+GeoVibesApp.controller('myCtrl', function($scope, $sce) {
   $scope.myImgSrc = $sce.trustAsResourceUrl('app/images/GeoVibes.png');
 });
 
