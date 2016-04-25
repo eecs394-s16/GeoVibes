@@ -3,8 +3,6 @@ var GeoVibesApp = angular.module('example', [
   'supersonic'
 ]);
 
-
-
 GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   google.maps.event.addDomListener(window, 'load', getUserLocation);
@@ -24,17 +22,17 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
               // debugger;
               // if(allTweets[i]["requestId"] == message.ipAddress){
                 allTweets[i].delete();
-              // }   
+              // }
             }
             getTweetsFromLocation(query, message.ipAddress);
             initializeMap(position.coords.latitude, position.coords.longitude);
           });
-          
+
         }
       });
-      
 
-      
+
+
     });
   };
 
@@ -48,8 +46,9 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       var tweets = JSON.parse(data);
       console.info(tweets);
       var tweetsString = JSON.stringify(tweets);
-      
+
       analyzeTweets(tweets, id);
+
     });
 
   }
@@ -75,7 +74,6 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
             requestId : id
           }
           sum = sum + data["probability"]["pos"];
-
           document.getElementById("aaa").innerHTML = ((sum / numTweets) * 100).toFixed(1) + "%";
           var finalTweet = new Tweet(tweetObj);
           finalTweet.save().then(function(){
@@ -138,6 +136,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       markers.forEach(function(marker) {
         marker.setMap(null);
       });
+      // setMapOnAll(null);
       markers = [];
 
       var name = places[0].name;
@@ -152,7 +151,7 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
               // debugger;
               if(allTweets[i]["requestId"] == message.ipAddress){
                 allTweets[i].delete();
-              }   
+              }
             }
             getTweetsFromLocation(name, message.ipAddress);
             // initializeMap(position.coords.latitude, position.coords.longitude);

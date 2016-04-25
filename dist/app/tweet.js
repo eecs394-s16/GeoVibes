@@ -61,7 +61,6 @@ Index.controller("IndexController", function ($scope, supersonic) {
     var test;
     var Tweet = supersonic.data.model("Tweet");
     Tweet.all().whenChanged( function (allTweets) {
-
         steroids.device.getIPAddress({}, {
             onSuccess: function(message) {
               test = "<ul>";
