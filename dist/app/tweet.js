@@ -49,7 +49,7 @@ Index.controller("IndexController", function ($scope, supersonic) {
         test = "<ul>";
         for(var t = 0; t < allTweets.length; t++){
 //            $scope.tweets.push(allTweets[t]["content"] + allTweets[t]["username"]);
-            test += "<li>"+allTweets[t]["username"] + ": " + allTweets[t]["content"] + "</li><hr>";
+            test += "<li><strong>"+allTweets[t]["username"] + ": " + "</strong>" + allTweets[t]["content"] + "</li><hr>";
         }
         test += "</ul>";
         console.info("aaa" +allTweets);
