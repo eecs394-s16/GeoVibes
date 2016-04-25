@@ -71,10 +71,3 @@ top: 4.25%;
     right:5%;
     z-index:100;
 }
-
-#logo {
-  position: absolute;
-  top: 1%;
-  left: 50%;
-  z-index: 100;
-}

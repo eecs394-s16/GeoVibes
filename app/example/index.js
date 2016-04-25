@@ -3,10 +3,6 @@ var GeoVibesApp = angular.module('example', [
   'supersonic'
 ]);
 
-GeoVibesApp.controller('myCtrl', function($scope, $sce) {
-  $scope.myImgSrc = $sce.trustAsResourceUrl('app/images/GeoVibes.png');
-});
-
 GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 
   google.maps.event.addDomListener(window, 'load', getUserLocation);
