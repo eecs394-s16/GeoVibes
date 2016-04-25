@@ -133,10 +133,10 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
         return;
       }
       // Clear out the old markers.
-      // markers.forEach(function(marker) {
-      //   marker.setMap(null);
-      // });
-      setMapOnAll(null);
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      // setMapOnAll(null);
       markers = [];
 
       var name = places[0].name;
