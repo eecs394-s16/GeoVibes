@@ -110,6 +110,8 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
 	  map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
+        
+        var markers = [];
 
          // Listen for the event fired when the user selects a prediction and retrieve
          // more details for that place.
@@ -119,6 +121,12 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
            if (places.length == 0) {
              return;
            }
+             // Clear out the old markers.
+        markers.forEach(function(marker) {
+        marker.setMap(null);
+            });
+        markers = [];
+             
              var name = places[0].name;
           getTweetsFromLocation(name);
 
@@ -132,6 +140,14 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
                anchor: new google.maps.Point(17, 34),
                scaledSize: new google.maps.Size(25, 25)
              };
+               
+                // Create a marker for each place.
+               markers.push(new google.maps.Marker({
+                   map: map,
+                   icon: icon,
+                   title: place.name,
+            position: place.geometry.location
+               }));
 
              if (place.geometry.viewport) {
                // Only geocodes have viewport.
