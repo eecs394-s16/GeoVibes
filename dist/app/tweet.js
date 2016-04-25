@@ -60,6 +60,7 @@ Index.controller("IndexController", function ($scope, supersonic) {
 
     var test;
     var Tweet = supersonic.data.model("Tweet");
+<<<<<<< HEAD
     Tweet.all().whenChanged( function (allTweets) {
         steroids.device.getIPAddress({}, {
             onSuccess: function(message) {
@@ -76,6 +77,41 @@ Index.controller("IndexController", function ($scope, supersonic) {
             }
           });
         
+=======
+<<<<<<< HEAD
+//     Tweet.findAll().then(function(allTweets){
+//         test = "<ul>";
+//         for(var t = 0; t < allTweets.length; t++){
+// //            $scope.tweets.push(allTweets[t]["content"] + allTweets[t]["username"]);
+//             test += "<li>"+allTweets[t]["username"] + ": " + allTweets[t]["content"] + "</li><hr>";
+//         }
+//         test += "</ul>";
+//         console.info("aaa" +allTweets);
+//         document.getElementById("aaaa").innerHTML = test;
+//     });
+    Tweet.all().whenChanged( function (allTweets) {
+        test = "<ul>";
+        for(var t = 0; t < allTweets.length; t++){
+//            $scope.tweets.push(allTweets[t]["content"] + allTweets[t]["username"]);
+            test += "<li><strong>"+allTweets[t]["username"] + ": " + "</strong>" + allTweets[t]["content"] + "</li><hr>";
+=======
+
+
+    steroids.device.getIPAddress({}, {
+        onSuccess: function(message) {
+          Tweet.all({requestId:message.ipAddress}).whenChanged( function (allTweets) {
+            test = "<ul>";
+            for(var t = 0; t < allTweets.length; t++){
+                test += "<li>"+allTweets[t]["username"] + ": " + allTweets[t]["content"] + "</li><hr>";
+            }
+            test += "</ul>";
+            console.info("aaa" +allTweets);
+            document.getElementById("aaaa").innerHTML = test;
+        });
+>>>>>>> 52b1440436412d0dd74dcbc7d23fa0af20a666d7
+        }
+      });
+>>>>>>> 976e69da52e85b378889cac813b8f2b2e5e43edc
     
     });
   });

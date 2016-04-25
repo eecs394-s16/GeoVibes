@@ -45,6 +45,5 @@ Index.controller("IndexController", function ($scope, supersonic) {
             }
           });
         
-    
     });
   });

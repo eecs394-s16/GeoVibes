@@ -105,18 +105,19 @@ GeoVibesApp.controller('HomeController', function($scope, supersonic) {
       zoom:12,
       panControl:true,
       zoomControl:true,
-      mapTypeControl:true,
+      mapTypeControl:false,
       scaleControl:true,
-      // streetViewControl:true,
-      // overviewMapControl:true,
+       streetViewControl:true,
+       overviewMapControl:true,
       rotateControl:true,
       mapTypeId:google.maps.MapTypeId.ROADMAP
     };
 
-    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
     map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(rating);
     var input = document.getElementById("pac-input");
     var searchBox = new google.maps.places.SearchBox(input);
+      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 
     map.addListener('bounds_changed', function() {
